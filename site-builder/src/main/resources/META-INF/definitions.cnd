@@ -1,0 +1,9 @@
+<jnt = 'http://www.jahia.org/jahia/nt/1.0'>
+<jmix = 'http://www.jahia.org/jahia/mix/1.0'>
+<sbnt = 'http://www.jahia.org/jahia/sbnt/1.0'>
+<sbmix = 'http://www.jahia.org/jahia/sbmix/1.0'>
+
+[sbmix:headCode] mixin
+extends = jnt:virtualsite
+itemtype = content
+- headCode (string, textarea) indexed=no
