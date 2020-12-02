@@ -55,14 +55,20 @@ public abstract class AbstractResourceImport extends AbstractJahiaTag {
         QueryResultWrapper result = session.getWorkspace().getQueryManager().createQuery(sb.toString(), Query.JCR_SQL2).execute();
         JCRNodeIteratorWrapper it = result.getNodes();
         List<JCRNodeWrapper> files = new ArrayList<>();
+        List<JCRNodeWrapper> minFiles = new ArrayList<>();
         while (it.hasNext()) {
             JCRNodeWrapper file = (JCRNodeWrapper) it.nextNode();
+            // Note that this may not be well suitable for real life usages
+            if (file.getName().endsWith("min.js") || file.getName().endsWith("min.css")) {
+                minFiles.add(file);
+            }
+
             if (file.getName().endsWith(".js") || file.getName().endsWith(".css")) {
                 files.add(file);
             }
         }
 
-        return files;
+        return !minFiles.isEmpty() ? minFiles: files;
     }
 
     protected abstract String generateImportTags() throws RepositoryException;
