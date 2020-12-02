@@ -59,7 +59,7 @@ public abstract class AbstractResourceImport extends AbstractJahiaTag {
         while (it.hasNext()) {
             JCRNodeWrapper file = (JCRNodeWrapper) it.nextNode();
             // Note that this may not be well suitable for real life usages
-            if (file.getName().endsWith("min.js") || file.getName().endsWith("min.css")) {
+            if (file.getName().endsWith(".min.js") || file.getName().endsWith(".min.css")) {
                 minFiles.add(file);
             }
 
