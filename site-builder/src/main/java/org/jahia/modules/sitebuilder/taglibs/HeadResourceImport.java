@@ -33,5 +33,4 @@ public class HeadResourceImport extends AbstractResourceImport {
 
         return sb.toString();
     }
-
 }

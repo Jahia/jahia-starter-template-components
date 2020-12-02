@@ -20,8 +20,8 @@ public abstract class AbstractResourceImport extends AbstractJahiaTag {
     private static Logger logger = LoggerFactory.getLogger(AbstractResourceImport.class);
 
     protected String siteKey;
-    protected JCRSessionWrapper session;
-    protected RenderContext ctx;
+    protected transient JCRSessionWrapper session;
+    protected transient RenderContext ctx;
 
     @Override
     public int doEndTag() throws JspException {
