@@ -28,7 +28,7 @@ public abstract class AbstractResourceImport extends AbstractJahiaTag {
     protected String siteKey;
     protected transient JCRSessionWrapper session;
     protected transient RenderContext ctx;
-
+    //Simple change
     @Override
     public int doEndTag() throws JspException {
         // Note that render context is not available during construction phase
