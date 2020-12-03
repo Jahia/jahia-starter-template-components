@@ -6,7 +6,12 @@ import javax.jcr.RepositoryException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Loads resources into footer
+ */
 public class FooterResourceImport extends AbstractResourceImport {
+
+    private static final long serialVersionUID = -588054644278368495L;
 
     protected String generateImportTags() throws RepositoryException {
         List<String> jsPaths = new ArrayList<>();

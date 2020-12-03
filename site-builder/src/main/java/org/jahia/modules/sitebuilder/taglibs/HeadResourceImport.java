@@ -6,7 +6,12 @@ import javax.jcr.RepositoryException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Loads resources into head
+ */
 public class HeadResourceImport extends AbstractResourceImport {
+
+    private static final long serialVersionUID = -512054631278368495L;
 
     protected String generateImportTags() throws RepositoryException {
         List<String> cssPaths = new ArrayList<>();

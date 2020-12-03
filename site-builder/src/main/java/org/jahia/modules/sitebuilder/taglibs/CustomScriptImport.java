@@ -10,8 +10,12 @@ import javax.jcr.RepositoryException;
 import javax.servlet.jsp.JspException;
 import java.io.IOException;
 
+/**
+ * Imports custom script defined at site level
+ */
 public class CustomScriptImport extends AbstractJahiaTag {
 
+    private static final long serialVersionUID = -549052631292368495L;
     private static Logger logger = LoggerFactory.getLogger(CustomScriptImport.class);
 
     private static final String CODE_PROPERTY = "headCode";
@@ -38,5 +42,4 @@ public class CustomScriptImport extends AbstractJahiaTag {
 
         pageContext.getOut().print(site.getPropertyAsString(CODE_PROPERTY));
     }
-
 }

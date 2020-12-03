@@ -18,6 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Base methods for loading of resources
+ */
 public abstract class AbstractResourceImport extends AbstractJahiaTag {
     private static Logger logger = LoggerFactory.getLogger(AbstractResourceImport.class);
 
