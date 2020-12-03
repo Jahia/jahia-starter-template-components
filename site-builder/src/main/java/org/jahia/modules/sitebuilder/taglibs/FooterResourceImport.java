@@ -19,6 +19,11 @@ public class FooterResourceImport extends AbstractResourceImport {
         }
 
         List<JCRNodeWrapper> jsFiles = getFileNodes(jsPaths);
+
+        if (ctx.isLiveMode()) {
+            jsFiles = filterMinFileDuplicates(jsFiles);
+        }
+
         StringBuilder sb = new StringBuilder();
         jsFiles.forEach(node -> sb.append(String.format("<script type = \"text/javascript\" src = \"%s\" ></script>%n", node.getUrl())));
 

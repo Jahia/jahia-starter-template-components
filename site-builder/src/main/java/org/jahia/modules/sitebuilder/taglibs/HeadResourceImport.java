@@ -27,6 +27,12 @@ public class HeadResourceImport extends AbstractResourceImport {
 
         List<JCRNodeWrapper> cssFiles = getFileNodes(cssPaths);
         List<JCRNodeWrapper> jsFiles = getFileNodes(jsPaths);
+
+        if (ctx.isLiveMode()) {
+            cssFiles = filterMinFileDuplicates(cssFiles);
+            jsFiles = filterMinFileDuplicates(jsFiles);
+        }
+
         StringBuilder sb = new StringBuilder();
         cssFiles.forEach(node -> sb.append(String.format("<link rel=\"stylesheet\" href=\"%s\">%n", node.getUrl())));
         jsFiles.forEach(node -> sb.append(String.format("<script type = \"text/javascript\" src = \"%s\" ></script>%n", node.getUrl())));

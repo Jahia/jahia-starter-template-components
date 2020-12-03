@@ -1,5 +1,6 @@
 package org.jahia.modules.sitebuilder.taglibs;
 
+import org.apache.commons.lang.StringUtils;
 import org.jahia.services.content.JCRNodeIteratorWrapper;
 import org.jahia.services.content.JCRNodeWrapper;
 import org.jahia.services.content.JCRSessionWrapper;
@@ -15,10 +16,12 @@ import javax.servlet.jsp.JspException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class AbstractResourceImport extends AbstractJahiaTag {
     private static Logger logger = LoggerFactory.getLogger(AbstractResourceImport.class);
 
+    protected static final String MIN = ".min.";
     protected String siteKey;
     protected transient JCRSessionWrapper session;
     protected transient RenderContext ctx;
@@ -55,20 +58,36 @@ public abstract class AbstractResourceImport extends AbstractJahiaTag {
         QueryResultWrapper result = session.getWorkspace().getQueryManager().createQuery(sb.toString(), Query.JCR_SQL2).execute();
         JCRNodeIteratorWrapper it = result.getNodes();
         List<JCRNodeWrapper> files = new ArrayList<>();
-        List<JCRNodeWrapper> minFiles = new ArrayList<>();
         while (it.hasNext()) {
             JCRNodeWrapper file = (JCRNodeWrapper) it.nextNode();
-            // Note that this may not be well suitable for real life usages
-            if (file.getName().endsWith(".min.js") || file.getName().endsWith(".min.css")) {
-                minFiles.add(file);
-            }
-
             if (file.getName().endsWith(".js") || file.getName().endsWith(".css")) {
                 files.add(file);
             }
         }
 
-        return !minFiles.isEmpty() ? minFiles: files;
+        return files;
+    }
+
+    protected List<JCRNodeWrapper> filterMinFileDuplicates(List<JCRNodeWrapper> list) {
+        List<JCRNodeWrapper> minList = list.stream()
+                .filter(file -> file.getName().contains(MIN))
+                .collect(Collectors.toList());
+
+        if (minList.isEmpty()) {
+            return list;
+        }
+
+        List<String> minNames = minList.stream()
+                .map(file -> StringUtils.substringBefore(file.getName(), MIN))
+                .collect(Collectors.toList());
+
+        list.removeAll(minList);
+        List<JCRNodeWrapper> allNotMin = list.stream()
+                .filter(file -> !minNames.contains(StringUtils.substringBeforeLast(file.getName(), ".")))
+                .collect(Collectors.toList());
+
+        minList.addAll(allNotMin);
+        return minList;
     }
 
     protected abstract String generateImportTags() throws RepositoryException;
