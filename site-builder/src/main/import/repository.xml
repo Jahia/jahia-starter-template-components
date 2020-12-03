@@ -38,14 +38,14 @@
                <previewAndLive jcr:primaryType="jnt:folder">
                   <jsHead jcr:primaryType="jnt:folder">
                      <README.md jcr:primaryType="jnt:file">
-                        <jcr:content j:lastExtractionDate="2020-12-02T14:09:48.606Z"
+                        <jcr:content j:lastExtractionDate="2020-12-03T15:45:03.044Z"
                                      jcr:mimeType="text/plain"
                                      jcr:primaryType="jnt:resource"/>
                      </README.md>
                   </jsHead>
                   <jsFooter jcr:primaryType="jnt:folder">
                      <README.md jcr:primaryType="jnt:file">
-                        <jcr:content j:lastExtractionDate="2020-12-02T14:09:48.597Z"
+                        <jcr:content j:lastExtractionDate="2020-12-03T15:45:03.033Z"
                                      jcr:mimeType="text/plain"
                                      jcr:primaryType="jnt:resource"/>
                      </README.md>
@@ -64,21 +64,21 @@
                <global jcr:primaryType="jnt:folder">
                   <css jcr:primaryType="jnt:folder">
                      <README.md jcr:primaryType="jnt:file">
-                        <jcr:content j:lastExtractionDate="2020-12-02T14:09:48.614Z"
+                        <jcr:content j:lastExtractionDate="2020-12-03T15:45:03.067Z"
                                      jcr:mimeType="text/plain"
                                      jcr:primaryType="jnt:resource"/>
                      </README.md>
                   </css>
                   <jsHead jcr:primaryType="jnt:folder">
                      <README.md jcr:primaryType="jnt:file">
-                        <jcr:content j:lastExtractionDate="2020-12-02T14:09:48.578Z"
+                        <jcr:content j:lastExtractionDate="2020-12-03T15:45:03.055Z"
                                      jcr:mimeType="text/plain"
                                      jcr:primaryType="jnt:resource"/>
                      </README.md>
                   </jsHead>
                   <jsFooter jcr:primaryType="jnt:folder">
                      <README.md jcr:primaryType="jnt:file">
-                        <jcr:content j:lastExtractionDate="2020-12-02T14:09:48.588Z"
+                        <jcr:content j:lastExtractionDate="2020-12-03T15:45:03.020Z"
                                      jcr:mimeType="text/plain"
                                      jcr:primaryType="jnt:resource"/>
                      </README.md>
@@ -107,19 +107,19 @@
                           jcr:primaryType="jnt:absoluteArea"/>
                   <customPageCss jcr:primaryType="jnt:area"/>
                </pagecontent>
-               <home j:hiddenTemplate="false"
-                     j:titleKey="label.emptyPage"
-                     jcr:mixinTypes="jmix:rbTitle"
-                     jcr:primaryType="jnt:pageTemplate">
+               <empty j:hiddenTemplate="false"
+                      j:titleKey="label.emptyPage"
+                      jcr:mixinTypes="jmix:rbTitle"
+                      jcr:primaryType="jnt:pageTemplate">
                   <j:translation_en jcr:language="en"
                                     jcr:mixinTypes="mix:title"
                                     jcr:primaryType="jnt:translation"
-                                    jcr:title="home"/>
-               </home>
+                                    jcr:title="empty"/>
+               </empty>
             </base>
          </templates>
          <home j:isHomePage="true"
-               j:templateName="home"
+               j:templateName="empty"
                jcr:primaryType="jnt:page">
             <j:translation_en jcr:language="en"
                               jcr:mixinTypes="mix:title"
