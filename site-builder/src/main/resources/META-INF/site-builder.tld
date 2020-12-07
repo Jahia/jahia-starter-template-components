@@ -34,4 +34,11 @@
         <tag-class>org.jahia.modules.sitebuilder.taglibs.CustomScriptImport</tag-class>
         <body-content>JSP</body-content>
     </tag>
+    <function>
+        <description>get resources for head (list of css and javascript url)</description>
+        <name>headResources</name>
+        <function-class>org.jahia.modules.sitebuilder.taglibs.HeadResourceFunctions</function-class>
+        <function-signature>java.util.List getResources(org.jahia.services.render.RenderContext)</function-signature>
+        <example>${r:headResources(renderContext)}</example>
+    </function>
 </taglib>

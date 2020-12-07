@@ -15,6 +15,18 @@
 <%--@elvariable id="currentResource" type="org.jahia.services.render.Resource"--%>
 <%--@elvariable id="url" type="org.jahia.services.render.URLGenerator"--%>
 
+<c:set var="headResources" value="${r:headResources(renderContext)}"/>
+<c:forEach var="resource" items="${headResources}">
+    <c:choose>
+        <c:when test="${resource.type eq 'css'}">
+            <template:addResources type="css" resources="${resource.resourceUrl}"/>
+        </c:when>
+        <c:when test="${resource.type eq 'js'}">
+            <template:addResources type="javascript" resources="${resource.resourceUrl}"/>
+        </c:when>
+    </c:choose>
+</c:forEach>
+
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -22,9 +34,8 @@
     <title>${fn:escapeXml(renderContext.mainResource.node.displayableName)}</title>
 <%--    Import resources--%>
     <r:customScript/>
-    <r:headResources/>
+<%--    <r:headResources/>--%>
 </head>
-
 <body>
 
 <!--start bodywrapper-->
@@ -32,12 +43,6 @@
     <template:area path="pagecontent"/>
 </div>
 <!--stop bodywrapper-->
-
-<c:if test="${renderContext.editMode}">
-    <template:addResources type="css" resources="edit.css" />
-</c:if>
-<template:addResources type="css" resources="960.css,01web.css"/>
-<template:theme/>
 
 <%--Import resources--%>
 <r:footerResources/>
