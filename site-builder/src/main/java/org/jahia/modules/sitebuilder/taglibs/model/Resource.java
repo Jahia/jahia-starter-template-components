@@ -1,9 +1,18 @@
 package org.jahia.modules.sitebuilder.taglibs.model;
 
+/**
+ * Resource abstraction
+ */
 public class Resource {
     private String type;
     private String resourceUrl;
 
+    /**
+     * Constructor
+     *
+     * @param type css or js
+     * @param resourceUrl String
+     */
     public Resource(String type, String resourceUrl) {
         this.type = type;
         this.resourceUrl = resourceUrl;

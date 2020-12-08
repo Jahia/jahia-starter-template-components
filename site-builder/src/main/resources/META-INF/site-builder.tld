@@ -12,14 +12,6 @@
     <uri>http://www.jahia.org/sitebuilder/resourceimport</uri>
     <tag>
         <description>
-            Tag to be used for import of resource filer into head.
-        </description>
-        <name>headResources</name>
-        <tag-class>org.jahia.modules.sitebuilder.taglibs.HeadResourceImport</tag-class>
-        <body-content>JSP</body-content>
-    </tag>
-    <tag>
-        <description>
             Tag to be used for import of resource filer into footer.
         </description>
         <name>footerResources</name>
