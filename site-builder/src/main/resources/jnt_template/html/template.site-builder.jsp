@@ -14,6 +14,8 @@
 <%--@elvariable id="renderContext" type="org.jahia.services.render.RenderContext"--%>
 <%--@elvariable id="currentResource" type="org.jahia.services.render.Resource"--%>
 <%--@elvariable id="url" type="org.jahia.services.render.URLGenerator"--%>
+<%--@elvariable id="headResources" type="java.util.List"--%>
+<%--@elvariable id="resource" type="org.jahia.modules.sitebuilder.taglibs.model.Resource"--%>
 
 <c:set var="headResources" value="${r:headResources(renderContext)}"/>
 <c:forEach var="resource" items="${headResources}">
