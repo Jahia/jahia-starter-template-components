@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  */
 public final class TaglibUtils {
 
-    private static final String MIN = ".min.";
+    private static final String MIN_EXTENSION = ".min.";
 
     private TaglibUtils() {
     }
@@ -60,7 +60,7 @@ public final class TaglibUtils {
      */
     public static List<JCRNodeWrapper> filterMinFileDuplicates(List<JCRNodeWrapper> list) {
         List<JCRNodeWrapper> minList = list.stream()
-                .filter(file -> file.getName().contains(MIN))
+                .filter(file -> file.getName().contains(MIN_EXTENSION))
                 .collect(Collectors.toList());
 
         if (minList.isEmpty()) {
@@ -68,7 +68,7 @@ public final class TaglibUtils {
         }
 
         List<String> minNames = minList.stream()
-                .map(file -> StringUtils.substringBefore(file.getName(), MIN))
+                .map(file -> StringUtils.substringBefore(file.getName(), MIN_EXTENSION))
                 .collect(Collectors.toList());
 
         list.removeAll(minList);
