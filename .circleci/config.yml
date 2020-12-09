@@ -56,10 +56,10 @@ jobs:
             - ~/.m2
           key: v2-dependencies-{{ checksum "pom.xml" }}
       - run:
-          name: Copy artifacts
+          name: Copy artifacts for site-builder
           command: |
             mkdir /tmp/artifacts/
-            cp /home/circleci/source/target/*.jar /tmp/artifacts/
+            cp /home/circleci/source/site-builder/target/*.jar /tmp/artifacts/
       - store_artifacts:
           path: /tmp/artifacts/
       - *persist-workspace
