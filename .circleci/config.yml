@@ -59,7 +59,8 @@ jobs:
           name: Copy artifacts
           command: |
             mkdir /tmp/artifacts/
-            cp /home/circleci/source/target/*.jar /tmp/artifacts/
+            cp /home/circleci/source/site-builder/target/*.jar /tmp/artifacts/
+            cp /home/circleci/source/page-builder-components/target/*.jar /tmp/artifacts/
       - store_artifacts:
           path: /tmp/artifacts/
       - *persist-workspace
