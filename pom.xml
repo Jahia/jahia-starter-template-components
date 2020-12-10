@@ -54,7 +54,6 @@
         <groupId>org.jahia.modules</groupId>
         <version>8.0.2.0-SNAPSHOT</version>
     </parent>
-    <groupId>org.foo.modules</groupId>
     <artifactId>site-builder-template-components</artifactId>
     <name>site-builder-template-components</name>
     <version>1.0.0-SNAPSHOT</version>
@@ -97,7 +96,7 @@
     </build>
 
     <modules>
-        <module>site-builder</module>
         <module>page-builder-components</module>
+        <module>site-builder</module>
     </modules>
 </project>

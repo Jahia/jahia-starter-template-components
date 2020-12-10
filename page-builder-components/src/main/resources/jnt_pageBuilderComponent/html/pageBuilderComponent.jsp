@@ -1,4 +1,4 @@
-<%@ page import="org.jahia.modules.pagebuildercomponents.taglib.PageBuilderParser" %>
+<%@ page import="org.jahia.modules.pagebuildercomponents.taglib.PageBuilderLib" %>
 <%@ page language="java" contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="template" uri="http://www.jahia.org/tags/templateLib" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -23,12 +23,14 @@
 <c:if test="${not empty currentNode.properties.htmlSource.node.path}" >
     <c:set value="${jcr:getChildrenOfType(currentNode.properties.htmlSource.node, 'jnt:resource')[0].properties['jcr:data']}" var="htmlSource" />
 </c:if>
-<c:set value="${pageBuilderParser:getHTMLSlices(htmlSource)}" var="htmlSlices" />
+<c:set value="${pageBuilderParser:getHtmlSlices(htmlSource)}" var="htmlSlices" />
 <c:forEach items="${htmlSlices}" var="htmlSlice">
-    <c:if test="${fn:containsIgnoreCase(htmlSlice, templateplaceholder)}">
-        <template:area path="${pageBuilderParser:getAreaId(htmlSlice)}"/>
-    </c:if>
-    <c:if test="${not fn:containsIgnoreCase(htmlSlice, templateplaceholder)}">
-        ${htmlSlice}
-    </c:if>
+    <c:choose>
+        <c:when test="${fn:containsIgnoreCase(htmlSlice, templateplaceholder)}">
+            <template:area path="${pageBuilderParser:getAreaId(htmlSlice)}"/>
+        </c:when>
+        <c:otherwise>
+            ${htmlSlice}
+        </c:otherwise>
+    </c:choose>
 </c:forEach>

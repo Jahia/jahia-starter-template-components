@@ -24,14 +24,11 @@
 package org.jahia.modules.pagebuildercomponents.exception;
 
 /**
- * Short description of the class
+ * Custom exception class used by the PageBuilderLib utility class
  *
  * @author nonico
  */
 public class PageBuilderException extends RuntimeException{
-    public PageBuilderException() {
-        super();
-    }
 
     public PageBuilderException(String message) {
         super(message);
