@@ -54,7 +54,7 @@
         <groupId>org.jahia.modules</groupId>
         <version>8.0.2.0-SNAPSHOT</version>
     </parent>
-    <groupId>org.foo.modules</groupId>
+    <groupId>org.jahia.modules.sitebuilder</groupId>
     <artifactId>site-builder</artifactId>
     <name>site-builder</name>
     <version>1.0.0-SNAPSHOT</version>

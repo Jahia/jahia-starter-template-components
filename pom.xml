@@ -98,5 +98,6 @@
 
     <modules>
         <module>site-builder</module>
+        <module>page-builder-components</module>
     </modules>
 </project>
