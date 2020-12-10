@@ -28,7 +28,7 @@ package org.jahia.modules.pagebuildercomponents.exception;
  *
  * @author nonico
  */
-public class PageBuilderException extends RuntimeException{
+public class PageBuilderException extends RuntimeException {
 
     public PageBuilderException(String message) {
         super(message);
