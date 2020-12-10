@@ -58,7 +58,7 @@
     <artifactId>site-builder-template-components</artifactId>
     <name>site-builder-template-components</name>
     <version>1.0.0-SNAPSHOT</version>
-    <packaging>bundle</packaging>
+    <packaging>pom</packaging>
     <description>This is the custom module (site-builder-template-components) for running on a Jahia server.</description>
 
     <scm>
@@ -98,5 +98,6 @@
 
     <modules>
         <module>site-builder</module>
+        <module>page-builder-components</module>
     </modules>
 </project>
