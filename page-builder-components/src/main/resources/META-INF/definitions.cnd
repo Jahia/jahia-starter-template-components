@@ -1,0 +1,8 @@
+<jmix = 'http://www.jahia.org/jahia/mix/1.0'>
+<jnt = 'http://www.jahia.org/jahia/nt/1.0'>
+
+
+
+[jnt:pageBuilderComponent] > jnt:content, jmix:siteComponent
+ - htmlSource (weakreference, picker[type='file']) mandatory < 'jnt:file'
+
