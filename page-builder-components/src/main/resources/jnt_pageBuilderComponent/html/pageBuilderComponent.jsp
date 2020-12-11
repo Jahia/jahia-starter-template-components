@@ -20,8 +20,17 @@
 <%--@elvariable id="currentResource" type="org.jahia.services.render.Resource"--%>
 <%--@elvariable id="url" type="org.jahia.services.render.URLGenerator"--%>
 <c:set value="${pageBuilderParser:templatePlaceholder()}" var="templateplaceholder" />
-<c:if test="${not empty currentNode.properties.htmlSource.node.path}" >
-    <c:set value="${jcr:getChildrenOfType(currentNode.properties.htmlSource.node, 'jnt:resource')[0].properties['jcr:data']}" var="htmlSource" />
+<c:if test="${not empty currentNode.properties.htmlSourceFile.node.path}" >
+    <c:choose>
+        <c:when test="${not empty currentNode.properties.htmlSourceCode.string}">
+            <c:set var="htmlSource" value="${currentNode.properties.htmlSourceCode.string}" />
+        </c:when>
+        <c:otherwise>
+            <c:set value="${jcr:getChildrenOfType(currentNode.properties.htmlSourceFile.node, 'jnt:resource')[0].properties['jcr:data']}"
+                   var="htmlSource" />
+            ${pageBuilderParser:updateHtmlSourceCode(currentNode, htmlSource)}
+        </c:otherwise>
+    </c:choose>
 </c:if>
 <c:set value="${pageBuilderParser:getHtmlSlices(htmlSource)}" var="htmlSlices" />
 <c:forEach items="${htmlSlices}" var="htmlSlice">
@@ -34,3 +43,4 @@
         </c:otherwise>
     </c:choose>
 </c:forEach>
+
