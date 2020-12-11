@@ -1,12 +1,9 @@
 package org.jahia.modules.pagebuildercomponents.taglib;
 
 import org.jahia.modules.pagebuildercomponents.exception.PageBuilderException;
-import org.jahia.services.content.JCRNodeWrapper;
 import org.junit.Assert;
 import org.junit.Test;
-import org.mockito.Mockito;
 
-import javax.jcr.RepositoryException;
 import java.util.List;
 
 /*
