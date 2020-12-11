@@ -23,13 +23,14 @@
  */
 package org.jahia.modules.pagebuildercomponents.taglib;
 
-import net.htmlparser.jericho.*;
+import net.htmlparser.jericho.Element;
+import net.htmlparser.jericho.OutputDocument;
+import net.htmlparser.jericho.Source;
+import net.htmlparser.jericho.StartTag;
 import org.jahia.modules.pagebuildercomponents.exception.PageBuilderException;
-import org.jahia.services.content.JCRNodeWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.jcr.RepositoryException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;

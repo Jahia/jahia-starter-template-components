@@ -19,20 +19,9 @@
 <%--@elvariable id="renderContext" type="org.jahia.services.render.RenderContext"--%>
 <%--@elvariable id="currentResource" type="org.jahia.services.render.Resource"--%>
 <%--@elvariable id="url" type="org.jahia.services.render.URLGenerator"--%>
-<c:set value="${pageBuilderParser:templatePlaceholder()}" var="templateplaceholder" />
-<c:if test="${not empty currentNode.properties.htmlSourceFile.node.path}" >
-    <c:set value="${jcr:getChildrenOfType(currentNode.properties.htmlSourceFile.node, 'jnt:resource')[0].properties['jcr:data']}"
-           var="htmlSource" />
+<c:if test="${not empty currentNode.properties.sourceCode.string}" >
+    <jsp:include page="../../common/displayHtml.jsp">
+        <jsp:param name="htmlSrcCode" value="${currentNode.properties.sourceCode.string}"/>
+        <jsp:param name="templateplaceholder" value="${pageBuilderParser:templatePlaceholder()}"/>
+    </jsp:include>
 </c:if>
-<c:set value="${pageBuilderParser:getHtmlSlices(htmlSource)}" var="htmlSlices" />
-<c:forEach items="${htmlSlices}" var="htmlSlice">
-    <c:choose>
-        <c:when test="${fn:containsIgnoreCase(htmlSlice, templateplaceholder)}">
-            <template:area path="${pageBuilderParser:getAreaId(htmlSlice)}"/>
-        </c:when>
-        <c:otherwise>
-            ${htmlSlice}
-        </c:otherwise>
-    </c:choose>
-</c:forEach>
-
