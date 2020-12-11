@@ -83,27 +83,4 @@ public class PageBuilderLibTest {
         Assert.assertEquals(String.format("The third slice should have %s", expectedThirdSlice), expectedThirdSlice,
                 actualHtmlSlices.get(2));
     }
-
-    @Test
-    public void testUpdateHtmlSourceCode() throws RepositoryException {
-        JCRNodeWrapper mockNode = Mockito.mock(JCRNodeWrapper.class);
-        String mockHtml = "<div id='1'><p>Mock<p></div>";
-        PageBuilderLib.updateHtmlSourceCode(mockNode, mockHtml);
-        Mockito.verify(mockNode, Mockito.times(1))
-                .setProperty(Mockito.anyString(), Mockito.anyString());
-        Mockito.verify(mockNode, Mockito.times(1))
-                .saveSession();
-    }
-
-    @Test
-    public void testUpdateHtmlSourceCodeWhenAlreadyDefined() throws RepositoryException {
-        JCRNodeWrapper mockNode = Mockito.mock(JCRNodeWrapper.class);
-        String mockHtml = "<div id='1'><p>Mock<p></div>";
-        Mockito.when(mockNode.hasProperty(Mockito.anyString())).thenReturn(Boolean.TRUE);
-        PageBuilderLib.updateHtmlSourceCode(mockNode, mockHtml);
-        Mockito.verify(mockNode, Mockito.times(0))
-                .setProperty(Mockito.anyString(), Mockito.anyString());
-        Mockito.verify(mockNode, Mockito.times(0))
-                .saveSession();
-    }
 }

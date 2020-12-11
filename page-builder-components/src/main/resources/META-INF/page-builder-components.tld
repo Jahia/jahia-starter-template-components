@@ -31,11 +31,4 @@
         <function-signature>java.lang.String getAreaId(java.lang.String)</function-signature>
         <example>pageBuilderParse:getAreaId(template)</example>
     </function>
-    <function>
-        <description>Update the Html source code of the node</description>
-        <name>updateHtmlSourceCode</name>
-        <function-class>org.jahia.modules.pagebuildercomponents.taglib.PageBuilderLib</function-class>
-        <function-signature>void updateHtmlSourceCode(org.jahia.services.content.JCRNodeWrapper, java.lang.String)</function-signature>
-        <example>pageBuilderParse:updateHtmlSourceCode(currentNode, updatedHtmlSourceCode)</example>
-    </function>
 </taglib>
