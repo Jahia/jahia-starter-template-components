@@ -25,9 +25,11 @@ package org.jahia.modules.pagebuildercomponents.taglib;
 
 import net.htmlparser.jericho.*;
 import org.jahia.modules.pagebuildercomponents.exception.PageBuilderException;
+import org.jahia.services.content.JCRNodeWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.jcr.RepositoryException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -43,6 +45,7 @@ public class PageBuilderLib {
     public static final String JAHIA_ATTRIBUTE = "data-jahia-area";
     public static final String TEMPLATE_PLACEHOLDER = "template:area";
     public static final String AREA_ID_ATTRIBUTE = "areaId";
+    public static final String HTML_SOURCE_CODE_PROPERTY = "htmlSourceCode";
     private static final Logger log = LoggerFactory.getLogger(PageBuilderLib.class);
     private static final String REGEX_PATTERN = String.format("<%s(.+?)/>", TEMPLATE_PLACEHOLDER);
     private static final Pattern PATTERN =   Pattern.compile(REGEX_PATTERN, Pattern.MULTILINE);
@@ -76,6 +79,19 @@ public class PageBuilderLib {
             throw new PageBuilderException( AREA_ID_ATTRIBUTE + " is not found in the tag");
         }
         return id;
+    }
+
+    /**
+     * Update the htmlSourceCode property of the node to be the same as the htmlSourceFile
+     * @param node
+     * @param updatedHtmlSourceCode
+     * @throws RepositoryException
+     */
+    public static void updateHtmlSourceCode(JCRNodeWrapper node, String updatedHtmlSourceCode) throws RepositoryException {
+        if (!node.hasProperty(HTML_SOURCE_CODE_PROPERTY)) {
+            node.setProperty(HTML_SOURCE_CODE_PROPERTY, updatedHtmlSourceCode);
+            node.saveSession();
+        }
     }
 
     /**
