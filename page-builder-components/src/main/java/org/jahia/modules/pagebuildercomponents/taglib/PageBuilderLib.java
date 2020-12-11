@@ -133,7 +133,7 @@ public class PageBuilderLib {
      * @param htmlSource a string that contains html source code
      * @return a string with injected <template:area> tag
      */
-    public static String parseHtml(String htmlSource) {
+    private static String parseHtml(String htmlSource) {
         Source source = new Source(htmlSource);
         OutputDocument outputDocument = new OutputDocument(source);
         List<Element> elementList = source.getAllElements();
