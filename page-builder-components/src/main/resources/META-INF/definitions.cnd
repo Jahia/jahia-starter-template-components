@@ -5,5 +5,4 @@
 
 [jnt:pageBuilderComponent] > jnt:content, jmix:siteComponent
  - htmlSourceFile (weakreference, picker[type='file']) mandatory < 'jnt:file'
- - htmlSourceCode (string, richtext)
 
