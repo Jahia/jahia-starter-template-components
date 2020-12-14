@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+        version="2.0">
+
+    <description>Parses html and looks for specific jahia attributes</description>
+    <display-name>PageBuilderParser</display-name>
+    <tlib-version>0.1</tlib-version>
+    <short-name>PageBuilderParser</short-name>
+    <uri>http://www.jahia.org/tags/pagebuilderparser</uri>
+    <function>
+        <description>Slices the html source code into a list of strings</description>
+        <name>getHtmlSlices</name>
+        <function-class>org.jahia.modules.pagebuildercomponents.taglib.PageBuilderLib</function-class>
+        <function-signature>java.util.List getHtmlSlices(java.lang.String)</function-signature>
+        <example>pageBuilderParse:getHtmlSlices(htmlSource)</example>
+    </function>
+    <function>
+        <description>Retrieve the template placeholder</description>
+        <name>templatePlaceholder</name>
+        <function-class>org.jahia.modules.pagebuildercomponents.taglib.PageBuilderLib</function-class>
+        <function-signature>java.lang.String templatePlaceHolder()</function-signature>
+        <example>pageBuilderParse:templatePlaceholder()</example>
+    </function>
+    <function>
+        <description>Retrieve the id of the template</description>
+        <name>getAreaId</name>
+        <function-class>org.jahia.modules.pagebuildercomponents.taglib.PageBuilderLib</function-class>
+        <function-signature>java.lang.String getAreaId(java.lang.String)</function-signature>
+        <example>pageBuilderParse:getAreaId(template)</example>
+    </function>
+</taglib>
