@@ -22,6 +22,5 @@
 <c:if test="${not empty currentNode.properties.sourceFile.node.path}" >
     <jsp:include page="../../common/displayHtml.jsp">
         <jsp:param name="htmlSrcCode" value="${jcr:getChildrenOfType(currentNode.properties.sourceFile.node, 'jnt:resource')[0].properties['jcr:data']}"/>
-        <jsp:param name="templateplaceholder" value="${pageBuilderParser:templatePlaceholder()}"/>
     </jsp:include>
 </c:if>

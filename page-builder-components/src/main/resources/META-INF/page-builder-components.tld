@@ -11,24 +11,10 @@
     <short-name>PageBuilderParser</short-name>
     <uri>http://www.jahia.org/tags/pagebuilderparser</uri>
     <function>
-        <description>Slices the html source code into a list of strings</description>
-        <name>getHtmlSlices</name>
+        <description>Slices the html source code into a list of html elements</description>
+        <name>getHtmlChunks</name>
         <function-class>org.jahia.modules.pagebuildercomponents.taglib.PageBuilderLib</function-class>
-        <function-signature>java.util.List getHtmlSlices(java.lang.String)</function-signature>
-        <example>pageBuilderParse:getHtmlSlices(htmlSource)</example>
-    </function>
-    <function>
-        <description>Retrieve the template placeholder</description>
-        <name>templatePlaceholder</name>
-        <function-class>org.jahia.modules.pagebuildercomponents.taglib.PageBuilderLib</function-class>
-        <function-signature>java.lang.String templatePlaceHolder()</function-signature>
-        <example>pageBuilderParse:templatePlaceholder()</example>
-    </function>
-    <function>
-        <description>Retrieve the id of the template</description>
-        <name>getAreaId</name>
-        <function-class>org.jahia.modules.pagebuildercomponents.taglib.PageBuilderLib</function-class>
-        <function-signature>java.lang.String getAreaId(java.lang.String)</function-signature>
-        <example>pageBuilderParse:getAreaId(template)</example>
+        <function-signature>java.util.List getHtmlChunks(java.lang.String)</function-signature>
+        <example>pageBuilderParse:getHtmlChunks(htmlSource)</example>
     </function>
 </taglib>

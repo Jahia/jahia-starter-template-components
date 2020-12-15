@@ -1,5 +1,6 @@
 <%@ page import="org.jahia.modules.pagebuildercomponents.taglib.PageBuilderLib" %>
 <%@ page language="java" contentType="text/html;charset=UTF-8" %>
+<%@ page import="org.jahia.modules.pagebuildercomponents.model.HtmlElementType" %>
 <%@ taglib prefix="template" uri="http://www.jahia.org/tags/templateLib" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -19,17 +20,21 @@
 <%--@elvariable id="renderContext" type="org.jahia.services.render.RenderContext"--%>
 <%--@elvariable id="currentResource" type="org.jahia.services.render.Resource"--%>
 <%--@elvariable id="url" type="org.jahia.services.render.URLGenerator"--%>
-<c:if test="${not empty param.htmlSrcCode && not empty param.templateplaceholder}">
+<%--@elvariable id="htmlSlices" type="java.util.List"--%>
+<%--@elvariable id="htmlElement" type="org.jahia.modules.pagebuildercomponents.model.HtmlElement"--%>
+
+<c:if test="${not empty param.htmlSrcCode}">
     <c:set var="htmlSrcCode" value="${param.htmlSrcCode}"/>
-    <c:set var="templateplaceholder" value="${param.templateplaceholder}" />
-    <c:set value="${pageBuilderParser:getHtmlSlices(htmlSrcCode)}" var="htmlSlices" />
-    <c:forEach items="${htmlSlices}" var="htmlSlice">
+    <c:set value="${pageBuilderParser:getHtmlChunks(htmlSrcCode)}" var="htmlSlices" />
+    <c:forEach items="${htmlSlices}" var="htmlElement">
         <c:choose>
-            <c:when test="${fn:containsIgnoreCase(htmlSlice, templateplaceholder)}">
-                <template:area path="${pageBuilderParser:getAreaId(htmlSlice)}" areaAsSubNode="true"/>
+            <c:when test="${htmlElement.type eq 'TEMPLATE_AREA'}">
+                ${htmlElement.startTag.toString()}
+                    <template:area path="${htmlElement.value}" areaAsSubNode="true"/>
+                </${htmlElement.startTag.name}>
             </c:when>
             <c:otherwise>
-                ${htmlSlice}
+                ${htmlElement.value}
             </c:otherwise>
         </c:choose>
     </c:forEach>

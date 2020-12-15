@@ -23,11 +23,11 @@
  */
 package org.jahia.modules.pagebuildercomponents.taglib;
 
-import net.htmlparser.jericho.Element;
-import net.htmlparser.jericho.OutputDocument;
 import net.htmlparser.jericho.Source;
 import net.htmlparser.jericho.StartTag;
 import org.jahia.modules.pagebuildercomponents.exception.PageBuilderException;
+import org.jahia.modules.pagebuildercomponents.model.HtmlElement;
+import org.jahia.modules.pagebuildercomponents.model.HtmlElementType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,95 +44,74 @@ import java.util.regex.Pattern;
  */
 public class PageBuilderLib {
     public static final String JAHIA_ATTRIBUTE = "data-jahia-area";
-    public static final String TEMPLATE_PLACEHOLDER = "template:area";
-    public static final String AREA_ID_ATTRIBUTE = "areaId";
     private static final Logger log = LoggerFactory.getLogger(PageBuilderLib.class);
-    private static final String REGEX_PATTERN = String.format("<%s(.+?)/>", TEMPLATE_PLACEHOLDER);
-    private static final Pattern PATTERN =   Pattern.compile(REGEX_PATTERN, Pattern.MULTILINE);
+    private static final String REGEX_PATTERNS = String.format("<(.+?)%s=(.+?)></(.+?)>", JAHIA_ATTRIBUTE);
+    private static final Pattern PATTERN = Pattern.compile(REGEX_PATTERNS, Pattern.MULTILINE);
 
     /**
      * Adding an non-public constructor to prevent Java from implicitly creating one
      */
-    private PageBuilderLib() {}
-
-    /**
-     * Retrieve the template placeholder constant
-     * @return the placeholder string
-     */
-    public static String templatePlaceHolder() {
-        return TEMPLATE_PLACEHOLDER;
+    private PageBuilderLib() {
     }
 
     /**
-     * Retrieve the id specified by the template:area
-     * @param templateAreaTag a string containing <template:area> tag
-     * @return the id of the template:area
+     * Retrieve the id specified by the tag
+     *
+     * @param tag a string containing the data-jahia-area attribute
+     * @return the value of the data-jahia-area attribute
      */
-    public static String getAreaId(String templateAreaTag) {
-        if (!templateAreaTag.contains(TEMPLATE_PLACEHOLDER)) {
-            throw new PageBuilderException("The tag \""+ templateAreaTag +"\" does not contain \"" + TEMPLATE_PLACEHOLDER + "\"");
+    private static String getDataJahiaAreaId(String tag) {
+        if (!tag.contains(JAHIA_ATTRIBUTE)) {
+            throw new PageBuilderException("The tag \"" + tag + "\" does not contain \"" + JAHIA_ATTRIBUTE + "\"");
         }
-        Source source = new Source(templateAreaTag);
-        Element element = source.getAllElements(TEMPLATE_PLACEHOLDER).get(0);
-        String id = element.getAttributeValue(AREA_ID_ATTRIBUTE);
+        Source source = new Source(tag);
+        if (source.getAllElements().size() != 1) {
+            throw new PageBuilderException(String.format("Unable to parse the string '%s'.", tag));
+        }
+        String id = source.getAllElements().get(0).getAttributeValue(JAHIA_ATTRIBUTE);
         if (id == null || id.isEmpty()) {
-            throw new PageBuilderException( AREA_ID_ATTRIBUTE + " is not found in the tag");
+            throw new PageBuilderException(JAHIA_ATTRIBUTE + " is not found in the tag");
         }
         return id;
     }
 
     /**
-     * Slices the HTML code into a list of strings allowing the JSP to determine which strings
+     * Slices the HTML code into a list of HtmlElement allowing the JSP to determine which strings
      * to render as html and which one not to.
+     *
      * @param htmlSource a string that contains html looking code
-     * @return a list of strings
+     * @return a list of html element
      */
-    public static List<String> getHtmlSlices(String htmlSource) {
-        log.debug("Slicing html");
-        List<String> slicedHTML = new ArrayList<>();
-        String parsedHTML = parseHtml(htmlSource);
-        Matcher matcher =   PATTERN.matcher(parsedHTML);
+    public static List<HtmlElement> getHtmlChunks(String htmlSource) {
+        log.debug("Creating html chunks");
+        List<HtmlElement> htmlChunks = new ArrayList<>();
+        Matcher matcher = PATTERN.matcher(htmlSource);
         int startIndex = 0;
-        while(matcher.find()) {
-            slicedHTML.add(parsedHTML.substring(startIndex, matcher.start()));
-            slicedHTML.add(matcher.group(0));
+        String value = "";
+        while (matcher.find() && !matcher.group(0).isEmpty()) {
+            Source source = new Source(matcher.group(0));
+            if (source.getAllStartTags().size() != 1) {
+                throw new PageBuilderException(
+                        String.format("The html tag with the %s attribute needs to be an empty tag.", JAHIA_ATTRIBUTE));
+            }
+            value = htmlSource.substring(startIndex, matcher.start()).trim();
+            if (!value.isEmpty()) {
+                htmlChunks.add(HtmlElement.builder()
+                        .type(HtmlElementType.HTML_FRAGMENT)
+                        .value(value).build());
+            }
+            StartTag startTag = source.getAllStartTags().get(0);
+            value = getDataJahiaAreaId(matcher.group(0).trim());
+            htmlChunks.add(HtmlElement.builder()
+                    .startTag(startTag)
+                    .type(HtmlElementType.TEMPLATE_AREA)
+                    .value(value).build());
             startIndex = matcher.end();
         }
-        slicedHTML.add(parsedHTML.substring(startIndex));
-        return slicedHTML;
-    }
-
-    /**
-     * Inserts a template placeholder
-     * @param startTag The beginning tag of an html element with the custom Jahia attribute
-     * @param areaId The id specified in the tag. Eg. <div data-jahia-area="id"></div>
-     * @return a string with the template area tags inserted
-     */
-    private static String insertTemplateAreaJSPTag(StartTag startTag, String areaId) {
-        StringBuilder sb = new StringBuilder();
-        String injectedTemplateArea = String.format("<%s %s='%s' />",TEMPLATE_PLACEHOLDER, AREA_ID_ATTRIBUTE, areaId);
-        return sb.append(startTag).append(injectedTemplateArea).toString();
-    }
-
-    /**
-     * Parses through the html code and inject <template:area> tags for every
-     * tags that contains the attribute "data-jahia-area"
-     * @param htmlSource a string that contains html source code
-     * @return a string with injected <template:area> tag
-     */
-    private static String parseHtml(String htmlSource) {
-        Source source = new Source(htmlSource);
-        OutputDocument outputDocument = new OutputDocument(source);
-        List<Element> elementList = source.getAllElements();
-        for (Element element : elementList) {
-            StartTag startTag = element.getStartTag();
-            String jahiaAttributeValue = element.getAttributeValue(JAHIA_ATTRIBUTE);
-            if (jahiaAttributeValue != null) {
-                String injectedData = insertTemplateAreaJSPTag(startTag, jahiaAttributeValue);
-                outputDocument.replace(startTag, injectedData);
-            }
+        value = htmlSource.substring(startIndex).trim();
+        if (!value.isEmpty()) {
+            htmlChunks.add(HtmlElement.builder().type(HtmlElementType.HTML_FRAGMENT).value(value).build());
         }
-        log.debug("Parsing finished");
-        return outputDocument.toString().trim();
+        return htmlChunks;
     }
 }
