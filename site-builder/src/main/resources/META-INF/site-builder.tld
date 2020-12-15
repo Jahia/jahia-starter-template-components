@@ -26,11 +26,24 @@
         <tag-class>org.jahia.modules.sitebuilder.taglibs.CustomScriptImport</tag-class>
         <body-content>JSP</body-content>
     </tag>
+    <tag>
+        <description>Tag to import page-level defined custom snippet in the head </description>
+        <name>pageCustomSnippet</name>
+        <tag-class>org.jahia.modules.sitebuilder.taglibs.tags.PageCustomSnippetTag</tag-class>
+        <body-content>JSP</body-content>
+    </tag>
     <function>
         <description>get resources for head (list of css and javascript url)</description>
         <name>headResources</name>
         <function-class>org.jahia.modules.sitebuilder.taglibs.HeadResourceFunctions</function-class>
         <function-signature>java.util.List getResources(org.jahia.services.render.RenderContext)</function-signature>
         <example>${r:headResources(renderContext)}</example>
+    </function>
+    <function>
+        <description>get resources for head (list of css and javascript url)</description>
+        <name>getPageOverrides</name>
+        <function-class>org.jahia.modules.sitebuilder.taglibs.functions.PageOverrideFunctions</function-class>
+        <function-signature>java.util.List getPageOverrides(org.jahia.services.content.JCRNodeWrapper, java.lang.String,
+            org.jahia.modules.sitebuilder.taglibs.model.FileType)</function-signature>
     </function>
 </taglib>
