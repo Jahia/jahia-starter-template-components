@@ -25,7 +25,7 @@
 
 <c:if test="${not empty param.htmlSrcCode}">
     <c:set var="htmlSrcCode" value="${param.htmlSrcCode}"/>
-    <c:set value="${pageBuilderParser:getHtmlChunks(htmlSrcCode)}" var="htmlSlices" />
+    <c:set value="${pageBuilderParser:getHtmlElements(htmlSrcCode)}" var="htmlSlices" />
     <c:forEach items="${htmlSlices}" var="htmlElement">
         <c:choose>
             <c:when test="${htmlElement.type eq 'TEMPLATE_AREA'}">

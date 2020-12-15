@@ -12,9 +12,9 @@
     <uri>http://www.jahia.org/tags/pagebuilderparser</uri>
     <function>
         <description>Slices the html source code into a list of html elements</description>
-        <name>getHtmlChunks</name>
+        <name>getHtmlElements</name>
         <function-class>org.jahia.modules.pagebuildercomponents.taglib.PageBuilderLib</function-class>
-        <function-signature>java.util.List getHtmlChunks(java.lang.String)</function-signature>
+        <function-signature>java.util.List getHtmlElements(java.lang.String)</function-signature>
         <example>pageBuilderParse:getHtmlChunks(htmlSource)</example>
     </function>
 </taglib>

@@ -37,7 +37,7 @@ public class PageBuilderLibTest {
     @Test(expected = PageBuilderException.class)
     public void testMalformedHtmlCode() {
         final String malformedHtmlCode = "<div data-jahia-area='area1'><div data-jahia-area='area2'></div></div>";
-        PageBuilderLib.getHtmlChunks(malformedHtmlCode);
+        PageBuilderLib.getHtmlElements(malformedHtmlCode);
     }
 
     @Test
@@ -48,15 +48,15 @@ public class PageBuilderLibTest {
         validHtmlCodes.add("<div id='1'><p>Some random text</p></div>");
         validHtmlCodes.add("<div data-jahia-area='area'></div>");
         for(String validHtmlCode : validHtmlCodes) {
-            final List<HtmlElement> actualHtmlChunks = PageBuilderLib.getHtmlChunks(validHtmlCode);
+            final List<HtmlElement> actualHtmlChunks = PageBuilderLib.getHtmlElements(validHtmlCode);
             Assert.assertEquals("It should only have one slice", expectedNumOfChunks, actualHtmlChunks.size());
         }
     }
 
     @Test
-    public void testHtmlChunkingWithEmptyTag() {
+    public void testGetHtmlElementsWithEmptyTag() {
         final String validHtmlTag = "<div id='1'>\n<div id='2' data-jahia-area='area1'></div>\n</div>";
-        List<HtmlElement> actualHtmlChunks = PageBuilderLib.getHtmlChunks(validHtmlTag);
+        List<HtmlElement> actualHtmlChunks = PageBuilderLib.getHtmlElements(validHtmlTag);
         Assert.assertEquals("There should be 3 slices of html elements", 3, actualHtmlChunks.size());
     }
 
@@ -64,22 +64,22 @@ public class PageBuilderLibTest {
     public void testTagRetainAttributes() {
         String expectedAttribute = "1";
         String tagWithAttributes = String.format("<div id='%s' data-jahia-area='area1'></div>", expectedAttribute);
-        List<HtmlElement> actualHtmlChunks = PageBuilderLib.getHtmlChunks(tagWithAttributes);
+        List<HtmlElement> actualHtmlChunks = PageBuilderLib.getHtmlElements(tagWithAttributes);
         Assert.assertEquals(String.format("The html element should have the id %s", expectedAttribute), expectedAttribute,
                 actualHtmlChunks.get(0).getStartTag().getAttributeValue("id"));
     }
 
     @Test
-    public void testGetHtmlChunksWithTwoJahiaAttribute() {
+    public void testGetHtmlElementsWithTwoJahiaAttribute() {
         int expectedSize = 2;
         String testHtmlCode = "<div data-jahia-area='area1'></div><div data-jahia-area='area2'></div>";
-        int actualSize = PageBuilderLib.getHtmlChunks(testHtmlCode).size();
+        int actualSize = PageBuilderLib.getHtmlElements(testHtmlCode).size();
         Assert.assertEquals("It should only have two slices", expectedSize, actualSize);
     }
 
 
     @Test
-    public void testHtmlChunkingWithThreeSlices() {
+    public void testGetHtmlElementsWithThreeSlices() {
         String expectedHtmlElementValue = "area";
         int expectedNumOfChunks = 3;
         HtmlElement expectedFirstHtmlElement = HtmlElement.builder()
@@ -96,7 +96,7 @@ public class PageBuilderLibTest {
                 .build();
         String input = String.format("%s\n<div data-jahia-area='area'></div>\n%s", expectedFirstHtmlElement.getValue(),
                 expectedThirdHtmlElement.getValue());
-        List<HtmlElement> actualHtmlChunks = PageBuilderLib.getHtmlChunks(input);
+        List<HtmlElement> actualHtmlChunks = PageBuilderLib.getHtmlElements(input);
         Assert.assertEquals(String.format("There should only be %s slices", expectedNumOfChunks),
                 expectedNumOfChunks, actualHtmlChunks.size());
         Assert.assertEquals(String.format("The 1st slice should have %s", expectedFirstHtmlElement.getValue()),

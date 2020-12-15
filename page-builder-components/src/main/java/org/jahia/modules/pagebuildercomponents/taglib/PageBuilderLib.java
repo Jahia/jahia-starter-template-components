@@ -82,9 +82,9 @@ public class PageBuilderLib {
      * @param htmlSource a string that contains html looking code
      * @return a list of html element
      */
-    public static List<HtmlElement> getHtmlChunks(String htmlSource) {
+    public static List<HtmlElement> getHtmlElements(String htmlSource) {
         log.debug("Creating html chunks");
-        List<HtmlElement> htmlChunks = new ArrayList<>();
+        List<HtmlElement> htmlElements = new ArrayList<>();
         Matcher matcher = PATTERN.matcher(htmlSource);
         int startIndex = 0;
         String value = "";
@@ -96,13 +96,13 @@ public class PageBuilderLib {
             }
             value = htmlSource.substring(startIndex, matcher.start()).trim();
             if (!value.isEmpty()) {
-                htmlChunks.add(HtmlElement.builder()
+                htmlElements.add(HtmlElement.builder()
                         .type(HtmlElementType.HTML_FRAGMENT)
                         .value(value).build());
             }
             StartTag startTag = source.getAllStartTags().get(0);
             value = getDataJahiaAreaId(matcher.group(0).trim());
-            htmlChunks.add(HtmlElement.builder()
+            htmlElements.add(HtmlElement.builder()
                     .startTag(startTag)
                     .type(HtmlElementType.TEMPLATE_AREA)
                     .value(value).build());
@@ -110,8 +110,8 @@ public class PageBuilderLib {
         }
         value = htmlSource.substring(startIndex).trim();
         if (!value.isEmpty()) {
-            htmlChunks.add(HtmlElement.builder().type(HtmlElementType.HTML_FRAGMENT).value(value).build());
+            htmlElements.add(HtmlElement.builder().type(HtmlElementType.HTML_FRAGMENT).value(value).build());
         }
-        return htmlChunks;
+        return htmlElements;
     }
 }
