@@ -6,15 +6,15 @@
         version="2.0">
 
     <description>Parses html and looks for specific jahia attributes</description>
-    <display-name>PageBuilderParser</display-name>
+    <display-name>PageBuilderLib</display-name>
     <tlib-version>0.1</tlib-version>
-    <short-name>PageBuilderParser</short-name>
+    <short-name>PageBuilderLib</short-name>
     <uri>http://www.jahia.org/tags/pagebuilderparser</uri>
     <function>
         <description>Slices the html source code into a list of html elements</description>
         <name>getHtmlElements</name>
         <function-class>org.jahia.modules.pagebuildercomponents.taglib.PageBuilderLib</function-class>
         <function-signature>java.util.List getHtmlElements(java.lang.String)</function-signature>
-        <example>pageBuilderParse:getHtmlChunks(htmlSource)</example>
+        <example>pageBuilderLib:getHtmlElements(htmlSource)</example>
     </function>
 </taglib>

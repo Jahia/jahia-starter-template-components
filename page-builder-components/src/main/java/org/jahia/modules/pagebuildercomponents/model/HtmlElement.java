@@ -28,7 +28,7 @@ import lombok.Data;
 import net.htmlparser.jericho.StartTag;
 
 /**
- * Short description of the class
+ * POJO class that represents html elements
  *
  * @author nonico
  */
