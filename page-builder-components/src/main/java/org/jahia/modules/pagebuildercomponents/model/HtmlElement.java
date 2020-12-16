@@ -28,7 +28,9 @@ import lombok.Data;
 import net.htmlparser.jericho.StartTag;
 
 /**
- * POJO class that represents html elements
+ * POJO class that represents html elements.
+ * This class will be use to determine how to render
+ * the html looking string and template area in the jsp
  *
  * @author nonico
  */
