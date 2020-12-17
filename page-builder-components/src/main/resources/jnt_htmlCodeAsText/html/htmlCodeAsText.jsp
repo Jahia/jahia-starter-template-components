@@ -22,6 +22,5 @@
 <c:if test="${not empty currentNode.properties.sourceCode.string}" >
     <jsp:include page="../../common/displayHtml.jsp">
         <jsp:param name="htmlSrcCode" value="${currentNode.properties.sourceCode.string}"/>
-        <jsp:param name="templateplaceholder" value="${pageBuilderParser:templatePlaceholder()}"/>
     </jsp:include>
 </c:if>
