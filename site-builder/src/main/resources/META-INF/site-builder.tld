@@ -40,10 +40,22 @@
         <example>${r:headResources(renderContext)}</example>
     </function>
     <function>
-        <description>get resources for head (list of css and javascript url)</description>
+        <description>Retrieve list of CSS/JS resources for adding page-level overrides</description>
         <name>getPageOverrides</name>
         <function-class>org.jahia.modules.sitebuilder.taglibs.functions.PageOverrideFunctions</function-class>
         <function-signature>java.util.List getPageOverrides(org.jahia.services.content.JCRNodeWrapper, java.lang.String,
             org.jahia.modules.sitebuilder.taglibs.model.FileType)</function-signature>
+    </function>
+    <function>
+        <description>Convenience function to check if all assets under files/assets are published</description>
+        <name>areAllAssetsPublished</name>
+        <function-class>org.jahia.modules.sitebuilder.taglibs.functions.BannerFunctions</function-class>
+        <function-signature>boolean areAllAssetsPublished(org.jahia.services.render.RenderContext)</function-signature>
+    </function>
+    <function>
+        <description>Convenience function to check if there are page-level overrides specified</description>
+        <name>hasPageOverrides</name>
+        <function-class>org.jahia.modules.sitebuilder.taglibs.functions.BannerFunctions</function-class>
+        <function-signature>boolean hasPageOverrides(org.jahia.services.content.JCRNodeWrapper)</function-signature>
     </function>
 </taglib>

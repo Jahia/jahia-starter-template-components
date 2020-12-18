@@ -1,13 +1,18 @@
+
 .banner {
     width: 100vw;
     height: 22px;
     line-height: 22px;
     margin: -5px 0 0 -8px;
     padding: 5px 10px;
-    background: #C1DEFF;
+    background: #F6E29B;
     color: #293136;
     font-family: "Nunito Sans", sans-serif;
     font-size: 14px;
+}
+
+.banner.allPublished {
+    background: #C1DEFF;
 }
 
 .banner span {

@@ -23,6 +23,7 @@
  */
 package org.jahia.modules.sitebuilder.taglibs.tags;
 
+import org.jahia.modules.sitebuilder.taglibs.PropConstants;
 import org.jahia.services.content.JCRNodeWrapper;
 import org.jahia.services.render.RenderContext;
 import org.jahia.taglibs.AbstractJahiaTag;
@@ -41,7 +42,6 @@ import java.io.IOException;
 public class PageCustomSnippetTag extends AbstractJahiaTag {
 
     private static Logger logger = LoggerFactory.getLogger(PageCustomSnippetTag.class);
-    public static final String PAGE_NODE_PROP_NAME = "pageHeadOverride"; // see definitions.cnd
 
     @Override
     public int doEndTag() throws JspException {
@@ -57,9 +57,11 @@ public class PageCustomSnippetTag extends AbstractJahiaTag {
 
     private void writeToContext() throws RepositoryException, IOException {
         JCRNodeWrapper ctxNode = getRenderContext().getMainResource().getNode();
-        if (!ctxNode.hasProperty(PAGE_NODE_PROP_NAME)) return;
+        if (!ctxNode.hasProperty(PropConstants.PAGE_HEAD_OVERRIDE_PROP)) return;
 
-        String snippet = ctxNode.getPropertyAsString(PAGE_NODE_PROP_NAME);
-        pageContext.getOut().print(snippet);
+        String snippet = ctxNode.getPropertyAsString(PropConstants.PAGE_HEAD_OVERRIDE_PROP);
+        if (snippet != null && !snippet.trim().isEmpty()) {
+            pageContext.getOut().print(snippet);
+        }
     }
 }
