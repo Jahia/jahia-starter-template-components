@@ -9,9 +9,6 @@ import org.junit.Test;
 
 import javax.jcr.RepositoryException;
 
-
-import static org.junit.Assert.*;
-
 /*
  * ==========================================================================================
  * =                            JAHIA'S ENTERPRISE DISTRIBUTION                             =
@@ -34,7 +31,8 @@ import static org.junit.Assert.*;
  *     please contact our team at sales@jahia.com or go to http://www.jahia.com/license.
  *
  * ==========================================================================================
- */public class BannerFunctionsTest {
+ */
+ public class BannerFunctionsTest {
 
     MockNode ctxNode;
 

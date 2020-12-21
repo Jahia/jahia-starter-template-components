@@ -35,9 +35,7 @@ import javax.servlet.jsp.JspException;
 import java.io.IOException;
 
 /**
- * Short description of the class
- *
- * @author gflores
+ * Add page-level snippet into HEAD tag
  */
 public class PageCustomSnippetTag extends AbstractJahiaTag {
 
