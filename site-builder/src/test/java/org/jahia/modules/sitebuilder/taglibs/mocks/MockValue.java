@@ -26,6 +26,8 @@ package org.jahia.modules.sitebuilder.taglibs.mocks;
 import org.jahia.data.beans.CategoryBean;
 import org.jahia.services.content.JCRNodeWrapper;
 import org.jahia.services.content.JCRValueWrapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.jcr.Binary;
 import javax.jcr.RepositoryException;
@@ -43,6 +45,9 @@ import java.util.Date;
  */
 public class MockValue implements JCRValueWrapper {
 
+
+    private static Logger log = LoggerFactory.getLogger(MockValue.class);
+
     MockNode node = new MockNode();
 
     @Override public JCRNodeWrapper getNode() throws ValueFormatException, IllegalStateException, RepositoryException {
@@ -58,62 +63,62 @@ public class MockValue implements JCRValueWrapper {
 
 
     @Override public CategoryBean getCategory() throws ValueFormatException, RepositoryException {
-        // ${TODO} Auto-generated method stub
+        log.warn("Unimplemented methods");
         return null;
     }
 
     @Override public PropertyDefinition getDefinition() throws RepositoryException {
-        // ${TODO} Auto-generated method stub
+        log.warn("Unimplemented methods");
         return null;
     }
 
     @Override public Date getTime() throws ValueFormatException, RepositoryException {
-        // ${TODO} Auto-generated method stub
+        log.warn("Unimplemented methods");
         return null;
     }
 
     @Override public String getString() throws ValueFormatException, IllegalStateException, RepositoryException {
-        // ${TODO} Auto-generated method stub
+        log.warn("Unimplemented methods");
         return null;
     }
 
     @Override public InputStream getStream() throws RepositoryException {
-        // ${TODO} Auto-generated method stub
+        log.warn("Unimplemented methods");
         return null;
     }
 
     @Override public Binary getBinary() throws RepositoryException {
-        // ${TODO} Auto-generated method stub
+        log.warn("Unimplemented methods");
         return null;
     }
 
     @Override public long getLong() throws ValueFormatException, RepositoryException {
-        // ${TODO} Auto-generated method stub
+        log.warn("Unimplemented methods");
         return 0;
     }
 
     @Override public double getDouble() throws ValueFormatException, RepositoryException {
-        // ${TODO} Auto-generated method stub
+        log.warn("Unimplemented methods");
         return 0;
     }
 
     @Override public BigDecimal getDecimal() throws ValueFormatException, RepositoryException {
-        // ${TODO} Auto-generated method stub
+        log.warn("Unimplemented methods");
         return null;
     }
 
     @Override public Calendar getDate() throws ValueFormatException, RepositoryException {
-        // ${TODO} Auto-generated method stub
+        log.warn("Unimplemented methods");
         return null;
     }
 
     @Override public boolean getBoolean() throws ValueFormatException, RepositoryException {
-        // ${TODO} Auto-generated method stub
+        log.warn("Unimplemented methods");
         return false;
     }
 
     @Override public int getType() {
-        // ${TODO} Auto-generated method stub
+        log.warn("Unimplemented methods");
         return 0;
     }
 }
