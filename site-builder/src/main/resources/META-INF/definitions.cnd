@@ -7,3 +7,14 @@
 extends = jnt:virtualsite
 itemtype = content
 - headCode (string, textarea) indexed=no
+
+
+[sbmix:pageOverrides] mixin
+extends = jnt:page
+- cssOverride (weakreference, picker[type='file']) multiple < jnt:file
+ - * (string)
+- jsHeadOverride (weakreference, picker[type='file']) multiple < jnt:file
+ - * (string)
+- jsBodyOverride (weakreference, picker[type='file']) multiple < jnt:file
+ - * (string)
+- pageHeadOverride (string, textarea)

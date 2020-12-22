@@ -4,6 +4,7 @@
 <%@ taglib prefix="template" uri="http://www.jahia.org/tags/templateLib" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="jcr" uri="http://www.jahia.org/tags/jcr" %>
 <%@ taglib prefix="r" uri="http://www.jahia.org/sitebuilder/resourceimport" %>
 <%--@elvariable id="currentNode" type="org.jahia.services.content.JCRNodeWrapper"--%>
@@ -17,6 +18,22 @@
 <%--@elvariable id="headResources" type="java.util.List"--%>
 <%--@elvariable id="resource" type="org.jahia.modules.sitebuilder.taglibs.model.Resource"--%>
 
+
+<%-- IMPORTS --%>
+
+<%@ page import="org.jahia.modules.sitebuilder.taglibs.model.FileType" %>
+<%@ page import="org.jahia.modules.sitebuilder.taglibs.PropConstants" %>
+
+<% pageContext.setAttribute("CSS", FileType.CSS); %>
+<% pageContext.setAttribute("JAVASCRIPT", FileType.JAVASCRIPT); %>
+<% pageContext.setAttribute("CSS_OVERRIDE_PROP", PropConstants.CSS_OVERRIDE_PROP); %>
+<% pageContext.setAttribute("JS_HEAD_OVERRIDE_PROP", PropConstants.JS_HEAD_OVERRIDE_PROP); %>
+<% pageContext.setAttribute("JS_BODY_OVERRIDE_PROP", PropConstants.JS_BODY_OVERRIDE_PROP); %>
+
+<c:set var="ctxNode" value="${renderContext.mainResource.node}"/>
+
+<%-- JSP START --%>
+
 <c:set var="headResources" value="${r:headResources(renderContext)}"/>
 <c:forEach var="resource" items="${headResources}">
     <c:choose>
@@ -29,24 +46,50 @@
     </c:choose>
 </c:forEach>
 
+<%-- Page override banner --%>
+<c:if test="${renderContext.editMode}">
+    <c:set var="renderCtx" value="${renderContext}" scope="request"/>
+    <jsp:include page="banner.jsp"/>
+</c:if>
+
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>${fn:escapeXml(ctxNode.displayableName)}</title>
 
-    <title>${fn:escapeXml(renderContext.mainResource.node.displayableName)}</title>
-<%--    Import resources--%>
+    <%--Import resources--%>
     <r:customScript/>
-<%--    <r:headResources/>--%>
+
+    <%-- page css overrides --%>
+    <c:forEach var="url" items="${r:getPageOverrides(ctxNode, CSS_OVERRIDE_PROP, CSS)}">
+        <template:addResources type="css" resources="${url}"/>
+    </c:forEach>
+
+    <%-- page head javascript overrides --%>
+    <c:forEach var="url" items="${r:getPageOverrides(ctxNode, JS_HEAD_OVERRIDE_PROP, JAVASCRIPT)}">
+        <template:addResources type="javascript" resources="${url}"/>
+    </c:forEach>
+
+    <%-- page custom snippet override --%>
+    <r:pageCustomSnippet/>
 </head>
+
 <body>
+    <!--start bodywrapper-->
+    <div class="bodywrapper">
+        <template:area path="pagecontent"/>
+    </div>
+    <!--stop bodywrapper-->
 
-<!--start bodywrapper-->
-<div class="bodywrapper">
-    <template:area path="pagecontent"/>
-</div>
-<!--stop bodywrapper-->
 
-<%--Import resources--%>
-<r:footerResources/>
+    <%-- page body javascript overrides --%>
+    <c:forEach var="url" items="${r:getPageOverrides(ctxNode, JS_BODY_OVERRIDE_PROP, JAVASCRIPT)}">
+        <template:addResources type="javascript" resources="${url}" targetTag="body"/>
+    </c:forEach>
+
+    <%--Import resources--%>
+    <r:footerResources/>
 </body>
+
 </html>
