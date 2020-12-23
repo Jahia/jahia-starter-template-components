@@ -48,7 +48,15 @@ public class MockValue implements JCRValueWrapper {
 
     private static Logger log = LoggerFactory.getLogger(MockValue.class);
 
-    MockNode node = new MockNode();
+    MockNode node = null;
+
+    public MockValue() {
+        this(new MockNode());
+    }
+
+    public MockValue(MockNode n) {
+        this.node = n;
+    }
 
     @Override public JCRNodeWrapper getNode() throws ValueFormatException, IllegalStateException, RepositoryException {
        return node;
