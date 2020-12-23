@@ -78,4 +78,18 @@ public class PageOverrideFunctionsTest {
         }
     }
 
+    /**
+     * Happens when a file has been deleted but the prop reference is still there.
+     */
+    @Test public void testPageOverrideNullValueNode() {
+        try {
+            ctxNode.setProperty("nullNodeProp", new MockValue[] { new MockValue(null) });
+            List<String> urls = PageOverrideFunctions.getPageOverrides(
+                    ctxNode, "nullNodeProp", FileType.JAVASCRIPT);
+            Assert.assertEquals(urls.size(), 0);
+        } catch (RepositoryException e) {
+            Assert.fail("unexpected exception");
+        }
+    }
+
 }

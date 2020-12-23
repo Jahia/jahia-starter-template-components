@@ -30,6 +30,9 @@ public final class PageOverrideFunctions {
 
         JCRValueWrapper[] values = ctxNode.getProperty(propName).getValues();
         for (JCRValueWrapper v : values) {
+            // reference still there but file no longer exists
+            if (v == null || v.getNode() == null) continue;
+
             String url = v.getNode().getUrl();
             if (StringUtils.isNotEmpty(url) && isFileType(fileType, url)) {
                 urls.add(url);
