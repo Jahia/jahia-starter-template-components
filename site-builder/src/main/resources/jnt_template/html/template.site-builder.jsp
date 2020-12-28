@@ -76,12 +76,8 @@
 </head>
 
 <body>
-    <!--start bodywrapper-->
-    <div class="bodywrapper">
-        <template:area path="pagecontent"/>
-    </div>
-    <!--stop bodywrapper-->
 
+    <template:area path="pagecontent"/>
 
     <%-- page body javascript overrides --%>
     <c:forEach var="url" items="${r:getPageOverrides(ctxNode, JS_BODY_OVERRIDE_PROP, JAVASCRIPT)}">
