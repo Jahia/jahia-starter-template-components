@@ -1,0 +1,38 @@
+{
+  "name": "sbmix:imgCustomAttribute",
+  "description": "Section for developers to specify custom attributes for the img tag",
+  "priority": 1.0,
+  "rank": 1.0,
+  "fields": [
+    {
+      "name": "j:classes",
+      "target": {
+        "rank": 1.0
+      }
+    },
+    {
+      "name": "j:style",
+      "target": {
+        "rank": 2.0
+      }
+    },
+    {
+      "name": "width",
+      "target": {
+        "rank": 3.0
+      }
+    },
+    {
+      "name": "height",
+      "target": {
+        "rank": 4.0
+      }
+    },
+    {
+      "name": "additionalAttributes",
+      "target": {
+        "rank": 5.0
+      }
+    }
+  ]
+}

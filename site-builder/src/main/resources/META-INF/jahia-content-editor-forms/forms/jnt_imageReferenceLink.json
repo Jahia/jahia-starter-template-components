@@ -1,0 +1,22 @@
+{
+  "nodeType": "jnt:imageReferenceLink",
+  "priority": 1.0,
+  "hasPreview": true,
+  "sections": [
+    {
+      "name": "content",
+      "labelKey": "label.engineTab.content",
+      "requiredPermission": "viewContentTab"
+    },
+    {
+      "name": "developer",
+      "labelKey": "label.section.developer@resources.site-builder",
+      "requiredPermission": "viewDeveloperSection"
+    },
+    {
+      "name": "options",
+      "labelKey": "label.engineTab.options",
+      "requiredPermission": "viewOptionsTab"
+    }
+  ]
+}
