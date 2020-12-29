@@ -36,6 +36,7 @@
 
 <c:set var="headResources" value="${r:headResources(renderContext)}"/>
 <c:forEach var="resource" items="${headResources}">
+    <template:addCacheDependency flushOnPathMatchingRegexp="${resource.resourceUrl}"/>
     <c:choose>
         <c:when test="${resource.type eq 'css'}">
             <template:addResources type="css" resources="${resource.resourceUrl}"/>
