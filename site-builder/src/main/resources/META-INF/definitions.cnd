@@ -18,3 +18,12 @@ extends = jnt:page
 - jsBodyOverride (weakreference, picker[type='file']) multiple < jnt:file
  - * (string)
 - pageHeadOverride (string, textarea)
+
+[sbmix:imgCustomAttribute] mixin
+ extends = jnt:imageReferenceLink
+ itemtype = developer
+ - j:classes (string)
+ - j:style (string)
+ - width (string) = '100%'
+ - height (string)
+ - additionalAttributes (string)
