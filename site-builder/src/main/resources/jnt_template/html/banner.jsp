@@ -25,6 +25,7 @@
                 <%-- page has unpublished CSS--%>
                 <fmt:message key="label.bannerText.unpublished">
                     <fmt:param value="${renderContext.site.siteKey}"/>
+                    <fmt:param value="${renderContext.site.language}"/>
                 </fmt:message>
 
             </c:when>
@@ -32,6 +33,7 @@
                 <%-- page has both custom CSS and unpublished files --%>
                 <fmt:message key="label.bannerText.overrideAndUnpublished">
                     <fmt:param value="${renderContext.site.siteKey}"/>
+                    <fmt:param value="${renderContext.site.language}"/>
                 </fmt:message>
             </c:otherwise>
         </c:choose>
