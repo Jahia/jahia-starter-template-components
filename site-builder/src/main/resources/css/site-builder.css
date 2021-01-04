@@ -21,7 +21,7 @@
 }
 
 .banner span {
-    background-image: url("/modules/site-builder/img/info.svg");
+    background-image: url("../img/info.svg");
     background-repeat: no-repeat;
     width: 14px;
     height: 14px;
