@@ -1,0 +1,21 @@
+<jmix = 'http://www.jahia.org/jahia/mix/1.0'>
+
+[jmix:customNavMenu] mixin
+ extends = jnt:navMenu
+ itemtype = content
+ - ulclass1 (string)
+ - liclass1 (string)
+ - aclass1 (string)
+ - ulclass2 (string)
+ - liclass2 (string)
+ - aclass2 (string)
+ - openingtag (string)
+ - openintagproperties (string)
+ - liclasshaschildren (string)
+ - aclasshaschildren (string)
+
+[jmix:customClassNavMenu] mixin
+ extends = jnt:page
+ itemtype = content
+ - aclass (string)
+

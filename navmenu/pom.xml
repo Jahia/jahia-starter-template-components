@@ -54,16 +54,16 @@
         <groupId>org.jahia.modules</groupId>
         <version>8.0.2.0-SNAPSHOT</version>
     </parent>
-    <artifactId>site-builder-template-components</artifactId>
-    <name>site-builder-template-components</name>
+    <groupId>org.jahia.modules.navmenu</groupId>
+    <artifactId>navmenu</artifactId>
+    <name>Navigation Menu</name>
     <version>1.0.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
-    <description>This is the custom module (site-builder-template-components) for running on a Jahia server.</description>
+    <packaging>bundle</packaging>
+    <description>This is the custom module (navmenu) for running on a Jahia server.</description>
 
-    <scm>
-        <connection>scm:dummy:uri</connection>
-        <developerConnection>scm:dummy:uri</developerConnection>
-    </scm>
+    <properties>
+        <jahia-module-signature>MCwCFG5fNFPRflsP9SFuEtgvsX7+tWNSAhRqbr0dSbFT2oMdW9y/yBgkbIMf1A==</jahia-module-signature>
+    </properties>
 
     <repositories>
         <repository>
@@ -88,17 +88,10 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <!-- Jahia manifest attributes -->
                         <Jahia-Depends>default</Jahia-Depends>
                     </instructions>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-
-    <modules>
-        <module>page-builder-components</module>
-        <module>navmenu</module>
-        <module>site-builder</module>
-    </modules>
 </project>
