@@ -11,7 +11,7 @@
  + * (jmix:droppableContent)
 
 [jnt:htmlCodeAsText] > jnt:content, jmix:pageBuilderComponentMixin
- - sourceCode (string, richtext) mandatory
+ - sourceCode (string, textarea) mandatory
  - * (string)
  + * (jnt:htmlCodeAsText)
  + * (jmix:droppableContent)
