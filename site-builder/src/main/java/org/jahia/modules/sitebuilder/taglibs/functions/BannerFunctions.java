@@ -23,7 +23,8 @@
  */
 package org.jahia.modules.sitebuilder.taglibs.functions;
 
-import org.jahia.services.content.JCRNodeWrapper;
+import org.jahia.api.Constants;
+import org.jahia.services.content.*;
 import org.jahia.services.render.RenderContext;
 
 import javax.jcr.RepositoryException;
@@ -31,24 +32,35 @@ import javax.jcr.query.Query;
 import javax.jcr.query.QueryManager;
 import javax.jcr.query.QueryResult;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+
 import static org.jahia.modules.sitebuilder.taglibs.PropConstants.*;
 
 public final class BannerFunctions {
 
     private BannerFunctions() {}
 
-    private static final String PUBLISHED_QUERY = "SELECT [j:id] FROM [jnt:file] as node "
-            + "WHERE ISDESCENDANTNODE(node, '%s') AND ([j:published] = false OR [j:published] is null)";
-
     public static boolean areAllAssetsPublished(RenderContext ctx) throws RepositoryException {
-        String path = String.format("/sites/%s/files/assets", ctx.getSite().getSiteKey()); ;
-        String query = String.format(PUBLISHED_QUERY, path);
+        JCRNodeWrapper nodeWrapper = ctx.getSite().getNode("files/assets");
+        String sourceWorkSpace = ctx.getMainResource().getWorkspace();
 
-        QueryManager queryMgr = ctx.getMainResource().getNode().getSession().getWorkspace().getQueryManager();
-        QueryResult result = queryMgr.createQuery(query, Query.JCR_SQL2).execute();
+        JCRPublicationService publicationService = JCRPublicationService.getInstance();
+        List<PublicationInfo> infos = publicationService.getPublicationInfo(
+                nodeWrapper.getIdentifier(), Collections.singleton(nodeWrapper.getLanguage()),
+                false, true, true,
+                sourceWorkSpace, Constants.LIVE_WORKSPACE
+        );
 
-        // All assets published if empty (no hasNext)
-        return !result.getNodes().hasNext();
+        if(infos == null || infos.isEmpty()) {
+            return true;
+        }
+        for(PublicationInfo info : infos) {
+            Set<Integer> allStatus = info.getTreeStatus(nodeWrapper.getLanguage());
+            if(!allStatus.isEmpty() && Collections.max(allStatus) > PublicationInfo.PUBLISHED) return false;
+        }
+        return true;
     }
 
     public static boolean hasPageOverrides(JCRNodeWrapper ctxNode) throws RepositoryException {
