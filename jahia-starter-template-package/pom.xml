@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    ==========================================================================================
+    =                            JAHIA'S ENTERPRISE DISTRIBUTION                             =
+    ==========================================================================================
+
+                                     http://www.jahia.com
+
+    JAHIA'S ENTERPRISE DISTRIBUTIONS LICENSING - IMPORTANT INFORMATION
+    ==========================================================================================
+
+        Copyright (C) 2002-2019 Jahia Solutions Group. All rights reserved.
+
+        This file is part of a Jahia's Enterprise Distribution.
+
+        Jahia's Enterprise Distributions must be used in accordance with the terms
+        contained in the Jahia Solutions Group Terms & Conditions as well as
+        the Jahia Sustainable Enterprise License (JSEL).
+
+        For questions regarding licensing, support, production usage...
+        please contact our team at sales@jahia.com or go to http://www.jahia.com/license.
+
+    ==========================================================================================
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>jahia-packages-parent</artifactId>
+        <groupId>org.jahia.packages</groupId>
+        <version>8.0.0.0</version>
+    </parent>
+    <artifactId>jahia-starter-template-package</artifactId>
+    <name>Jahia Starter Template Package</name>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <description>Parent project to package all related components to Jahia Starter template</description>
+    <properties>
+        <jahia.package.assembly.file>src/main/assembly/jahia-starter-template-package.xml</jahia.package.assembly.file>
+        <jahia.package.sources.assembly.file>src/main/assembly/jahia-starter-template-package-sources.xml</jahia.package.sources.assembly.file>
+        <jahia.final.package.name>jahia-starter-template-package</jahia.final.package.name>
+        <jahia.manifest.package.id>jahia-starter-template-package</jahia.manifest.package.id>
+        <jahia.manifest.license>org.jahia.core</jahia.manifest.license>
+    </properties>
+    <scm>
+        <connection>scm:git:git@github.com:Jahia/site-builder-template-components.git</connection>
+        <url>https://github.com/Jahia/site-builder-template-components.git</url>
+        <developerConnection>scm:git:git@github.com:Jahia/site-builder-template-components.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+    <repositories>
+        <repository>
+            <id>jahia-public</id>
+            <name>Jahia Public Repository</name>
+            <url>https://devtools.jahia.com/nexus/content/groups/public</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>jahiaRepository</id>
+            <name>Jahia's Maven Repository</name>
+            <url>http://maven.jahia.org/maven2</url>
+        </repository>
+    </repositories>
+    <dependencies>
+        <dependency>
+            <groupId>org.jahia.modules.sitebuilder</groupId>
+            <artifactId>site-builder</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jahia.modules.pagebuildercomponents</groupId>
+            <artifactId>page-builder-components</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>

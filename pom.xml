@@ -99,5 +99,6 @@
     <modules>
         <module>page-builder-components</module>
         <module>site-builder</module>
+        <module>jahia-starter-template-package</module>
     </modules>
 </project>
