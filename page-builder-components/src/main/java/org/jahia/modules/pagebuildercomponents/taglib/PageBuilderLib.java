@@ -23,11 +23,15 @@
  */
 package org.jahia.modules.pagebuildercomponents.taglib;
 
+import net.htmlparser.jericho.Attribute;
+import net.htmlparser.jericho.Attributes;
 import net.htmlparser.jericho.Source;
 import net.htmlparser.jericho.StartTag;
 import org.jahia.modules.pagebuildercomponents.exception.PageBuilderException;
+import org.jahia.modules.pagebuildercomponents.handlers.Handlers;
 import org.jahia.modules.pagebuildercomponents.model.HtmlElement;
 import org.jahia.modules.pagebuildercomponents.model.HtmlElementType;
+import org.jahia.modules.pagebuildercomponents.model.TemplateArea;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,6 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * This Java utility class contains a series of libraries that parses
@@ -102,6 +107,8 @@ public class PageBuilderLib {
             }
             StartTag startTag = source.getAllStartTags().get(0);
             value = getDataJahiaAreaId(matcher.group(0).trim());
+            List<Attribute> attributes = getAttributes(matcher.group(0).trim());
+            TemplateArea area = applyAttributesToTemplateArea(startTag, attributes);
             htmlElements.add(createHtmlElementTemplateArea(startTag, value));
             startIndex = matcher.end();
         }
@@ -136,5 +143,39 @@ public class PageBuilderLib {
                 .type(HtmlElementType.HTML_FRAGMENT)
                 .value(value)
                 .build();
+    }
+
+    private static List<Attribute> getAttributes(String tag) {
+        if (!tag.contains(JAHIA_ATTRIBUTE)) {
+            throw new PageBuilderException(String.format("The tag '%s' does not contain %s", tag, JAHIA_ATTRIBUTE));
+        }
+        Source source = new Source(tag);
+        if (source.getAllElements().size() != 1) {
+            throw new PageBuilderException(String.format("Unable to parse the string '%s'.", tag));
+        }
+        Attributes attributes = source.getAllElements().get(0).getAttributes();
+        if (attributes.isEmpty()) {
+            throw new PageBuilderException(String.format("%s is not found in the tag",JAHIA_ATTRIBUTE));
+        }
+
+        return collectJahiaAttributes(attributes);
+    }
+
+    private static List<Attribute> collectJahiaAttributes(Attributes attributes) {
+        return attributes.stream().filter(attr -> attr.getName().startsWith(JAHIA_ATTRIBUTE)).collect(Collectors.toList());
+    }
+
+    private static TemplateArea applyAttributesToTemplateArea(StartTag startTag, List<Attribute> attributes) {
+        TemplateArea templateArea = new TemplateArea();
+        templateArea.setStartTag(startTag);
+        attributes.forEach(attr -> Handlers.handle(templateArea, attr));
+        return templateArea;
+    }
+
+    private static TemplateArea createTemplateAreaFragment(String value) {
+        TemplateArea templateArea = new TemplateArea();
+        templateArea.setType(HtmlElementType.HTML_FRAGMENT);
+        templateArea.setValue(value);
+        return templateArea;
     }
 }
