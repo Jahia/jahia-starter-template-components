@@ -1,7 +1,7 @@
 package org.jahia.modules.pagebuildercomponents.handlers;
 
 import net.htmlparser.jericho.Attribute;
-import org.jahia.modules.pagebuildercomponents.model.TemplateArea;
+import org.jahia.modules.pagebuildercomponents.model.TemplateFragment;
 
 import java.util.Arrays;
 
@@ -10,7 +10,7 @@ import java.util.Arrays;
  */
 public class TypesHandler implements Handler {
     @Override
-    public void handle(TemplateArea templateArea, Attribute attribute) {
-        templateArea.setTypes(Arrays.asList(attribute.getValue().split(",")));
+    public void handle(TemplateFragment templateFragment, Attribute attribute) {
+        templateFragment.setTypes(Arrays.asList(attribute.getValue().split(",")));
     }
 }

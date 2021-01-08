@@ -2,7 +2,8 @@ package org.jahia.modules.pagebuildercomponents.handlers;
 
 import net.htmlparser.jericho.Attribute;
 import org.apache.commons.lang.StringUtils;
-import org.jahia.modules.pagebuildercomponents.model.TemplateArea;
+import org.jahia.modules.pagebuildercomponents.exception.PageBuilderException;
+import org.jahia.modules.pagebuildercomponents.model.TemplateFragment;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -38,22 +39,23 @@ public class Handlers {
             return Optional.ofNullable(Arrays.stream(values())
                     .filter(t -> t.type.equalsIgnoreCase(str))
                     .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException("unknown type value: " + str)));
+                    .orElseThrow(() -> new PageBuilderException(String.format(
+                            "Unknown handler argument: %s. Make sure to supply an attribute that has a handler or create a handler for %s", str, str))));
         }
     }
 
     /**
      * Handle an attribute for template area
      *
-     * @param templateArea TemplateArea
+     * @param templateFragment TemplateFragment
      * @param attribute Attribute
      */
-    public static void handle(TemplateArea templateArea, Attribute attribute) {
+    public static void handle(TemplateFragment templateFragment, Attribute attribute) {
         Optional<Type> type = Type.fromString(StringUtils.substringAfterLast(attribute.getName(), "-"));
 
         if (type.isPresent()) {
             Handler handler = HandlerFactory.getHandler(type.get());
-            handler.handle(templateArea, attribute);
+            handler.handle(templateFragment, attribute);
         }
     }
 }

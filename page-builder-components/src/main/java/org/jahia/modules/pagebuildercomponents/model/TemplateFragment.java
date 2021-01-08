@@ -5,16 +5,23 @@ import net.htmlparser.jericho.StartTag;
 import java.util.List;
 
 /**
- * Template area abstraction, helps to generate <template:area /> tags
+ * Template area abstraction, helps to generate <template:area /> tags or contains raw html rawValue
  */
-public class TemplateArea {
+public class TemplateFragment {
     private StartTag startTag;
     private HtmlElementType type;
-    private String value;
+    private String rawValue;
     private String path;
     private String areaType;
     private int limit;
     private List types;
+
+    /**
+     * Constructor
+     */
+    public TemplateFragment() {
+        areaType = "jnt:contentList";
+    }
 
     public StartTag getStartTag() {
         return startTag;
@@ -32,12 +39,12 @@ public class TemplateArea {
         this.type = type;
     }
 
-    public String getValue() {
-        return value;
+    public String getRawValue() {
+        return rawValue;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setRawValue(String rawValue) {
+        this.rawValue = rawValue;
     }
 
     public String getPath() {
@@ -64,8 +71,8 @@ public class TemplateArea {
         this.limit = limit;
     }
 
-    public List getTypes() {
-        return types;
+    public String[] getTypes() {
+        return types == null ? null : (String[]) types.toArray(new String[0]);
     }
 
     public void setTypes(List types) {
