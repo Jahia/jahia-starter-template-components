@@ -16,6 +16,8 @@
     <template:addResources type="css" resources="site-builder.css" />
     <div class="banner ${ allPublished ? "all-published" : "" }">
         <span>&nbsp;</span>
+
+        <c:url var="assetsUrl" value="/jahia/jcontent/${renderContext.site.siteKey}/${renderContext.site.language}/media/files/assets"/>
         <c:choose>
             <c:when test="${allPublished}">
                 <%-- page has override files --%>
@@ -24,16 +26,13 @@
             <c:when test="${!hasCustomPageCss}">
                 <%-- page has unpublished CSS--%>
                 <fmt:message key="label.bannerText.unpublished">
-                    <fmt:param value="${renderContext.site.siteKey}"/>
-                    <fmt:param value="${renderContext.site.language}"/>
+                    <fmt:param value="${assetsUrl}"/>
                 </fmt:message>
-
             </c:when>
             <c:otherwise>
                 <%-- page has both custom CSS and unpublished files --%>
                 <fmt:message key="label.bannerText.overrideAndUnpublished">
-                    <fmt:param value="${renderContext.site.siteKey}"/>
-                    <fmt:param value="${renderContext.site.language}"/>
+                    <fmt:param value="${assetsUrl}"/>
                 </fmt:message>
             </c:otherwise>
         </c:choose>
