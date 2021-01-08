@@ -10,6 +10,6 @@
 
 2. `data-jahia-area-limit` used as `data-jahia-area-limit="2"`
 
-3. `data-jahia-area-types` used as `data-jahia-area-types="jnt:text jnt:bigText"`
+3. `data-jahia-area-types` used as `data-jahia-area-types="jnt:text,jnt:bigText"`
 
 4. `data-jahia-text` used as `data-jahia-text="textname"`
