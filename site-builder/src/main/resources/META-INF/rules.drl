@@ -4,6 +4,7 @@ package org.jahia.modules.sitebuilder.rules
 import org.jahia.services.content.rules.*
 import org.jahia.services.content.JCRContentUtils
 import org.slf4j.Logger
+import org.jahia.services.cache.CacheHelper
 
 expander rules.dsl
 
@@ -12,6 +13,7 @@ global User user
 global Service service
 global Logger logger
 global JCRContentUtils jcrUtils
+global CacheHelper cacheHelper
 
 rule "New assets are published under /files/assets"
     salience 100
@@ -22,5 +24,5 @@ rule "New assets are published under /files/assets"
         The node has a parent
             - the parent has the type jnt:folder
     then
-        Flush all caches
+        > CacheHelper.flushAllCaches();
 end
