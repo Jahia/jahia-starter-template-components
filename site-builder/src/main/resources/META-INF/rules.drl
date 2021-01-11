@@ -18,6 +18,7 @@ global CacheHelper cacheHelper
 rule "New assets are published under /files/assets"
     salience 100
     when
+        - installed modules contains site-builder # TODO: to be rename to jahia-starter-template (BACKLOG-15232)
         A node is published
             - it has the type jnt:file
             - it is in /sites/[^/]*/files/assets
