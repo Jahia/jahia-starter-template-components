@@ -85,7 +85,9 @@ public final class PageBuilderLib {
             }
             StartTag startTag = source.getAllStartTags().get(0);
             List<Attribute> attributes = getAttributes(matcher.group(0).trim());
-            htmlElements.add(applyAttributesToTemplateArea(startTag, attributes));
+            TemplateFragment templateFragment = createTemplateAreaFragment(startTag);
+            applyAttributesToTemplateArea(templateFragment, attributes);
+            htmlElements.add(templateFragment);
             startIndex = matcher.end();
         }
         value = htmlSource.substring(startIndex).trim();
@@ -115,12 +117,15 @@ public final class PageBuilderLib {
         return attributes.stream().filter(attr -> attr.getName().startsWith(JAHIA_ATTRIBUTE)).collect(Collectors.toList());
     }
 
-    private static TemplateFragment applyAttributesToTemplateArea(StartTag startTag, List<Attribute> attributes) {
+    private static TemplateFragment createTemplateAreaFragment(StartTag startTag) {
         TemplateFragment templateFragment = new TemplateFragment();
         templateFragment.setStartTag(startTag);
         templateFragment.setType(HtmlElementType.TEMPLATE_AREA);
-        attributes.forEach(attr -> Handlers.handle(templateFragment, attr));
         return templateFragment;
+    }
+
+    private static void applyAttributesToTemplateArea(TemplateFragment templateFragment, List<Attribute> attributes) {
+        attributes.forEach(attr -> Handlers.handle(templateFragment, attr));
     }
 
     private static TemplateFragment createHtmlFragment(String value) {
