@@ -21,20 +21,26 @@
 <%--@elvariable id="currentResource" type="org.jahia.services.render.Resource"--%>
 <%--@elvariable id="url" type="org.jahia.services.render.URLGenerator"--%>
 <%--@elvariable id="htmlSlices" type="java.util.List"--%>
-<%--@elvariable id="htmlElement" type="org.jahia.modules.pagebuildercomponents.model.HtmlElement"--%>
+<%--@elvariable id="templateFragment" type="org.jahia.modules.pagebuildercomponents.model.TemplateFragment"--%>
 
 <c:if test="${not empty param.htmlSrcCode}">
     <c:set var="htmlSrcCode" value="${param.htmlSrcCode}"/>
-    <c:set value="${pageBuilderParser:getHtmlElements(htmlSrcCode)}" var="htmlSlices" />
-    <c:forEach items="${htmlSlices}" var="htmlElement">
+    <c:set value="${pageBuilderParser:getTemplateFragments(htmlSrcCode)}" var="htmlSlices" />
+    <c:forEach items="${htmlSlices}" var="templateFragment">
         <c:choose>
-            <c:when test="${htmlElement.type eq 'TEMPLATE_AREA'}">
-                ${htmlElement.startTag.toString()}
-                    <template:area path="${htmlElement.value}" areaAsSubNode="true"/>
-                </${htmlElement.startTag.name}>
+            <c:when test="${templateFragment.type eq 'TEMPLATE_AREA'}">
+                ${templateFragment.startTag.toString()}
+                    <template:area
+                            path="${templateFragment.path}"
+                            areaType="${templateFragment.areaType}"
+                            nodeTypes="${not empty templateFragment.types ? fn:join(templateFragment.types, ' ') : null}"
+                            listLimit="${templateFragment.limit > 0 ? templateFragment.limit : -1}"
+                            areaAsSubNode="true"
+                    />
+                </${templateFragment.startTag.name}>
             </c:when>
             <c:otherwise>
-                ${htmlElement.value}
+                ${templateFragment.rawValue}
             </c:otherwise>
         </c:choose>
     </c:forEach>
