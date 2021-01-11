@@ -27,3 +27,17 @@ extends = jnt:page
  - width (string) = '100%'
  - height (string)
  - additionalAttributes (string)
+
+[sbnt:starterNavMenu] > jnt:content, jmix:pageBuilderComponentMixin
+ - navMenuType (string, choicelist[resourceBundle]) = 'list' autocreated indexed=no < 'list', 'div'
+ - showLvl2Pages (boolean) = true indexed=no
+
+[sbmix:starterNavMenuProps] mixin
+ extends = sbnt:starterNavMenu
+ - navClasses (string) indexed=no
+ - lvl1ListClasses (string) indexed=no
+ - lvl1ItemClasses (string) indexed=no
+ - hasSubpagesClasses (string) indexed=no
+ - lvl2ListClasses (string) indexed=no
+ - lvl2ItemClasses (string) indexed=no
+ - currentPageClasses (string) indexed=no
