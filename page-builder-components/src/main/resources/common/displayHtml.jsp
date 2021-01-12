@@ -39,6 +39,11 @@
                     />
                 </${templateFragment.startTag.name}>
             </c:when>
+            <c:when test="${templateFragment.type eq 'TEMPLATE_AREA'}">
+                ${templateFragment.startTag.toString()}
+                    <template:module path="${templateFragment.path}" nodeTypes="${templateFragment.areaType}"/>
+                </${templateFragment.startTag.name}>
+            </c:when>
             <c:otherwise>
                 ${templateFragment.rawValue}
             </c:otherwise>
