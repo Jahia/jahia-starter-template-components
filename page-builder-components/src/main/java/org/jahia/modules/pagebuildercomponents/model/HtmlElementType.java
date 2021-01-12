@@ -28,7 +28,8 @@ package org.jahia.modules.pagebuildercomponents.model;
  */
 public enum HtmlElementType {
     HTML_FRAGMENT("HTML_FRAGMENT"),
-    TEMPLATE_AREA("TEMPLATE_AREA")
+    TEMPLATE_AREA("TEMPLATE_AREA"),
+    TEMPLATE_MODULE("TEMPLATE_MODULE"),
     ;
 
     private final String value;

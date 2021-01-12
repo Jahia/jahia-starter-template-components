@@ -28,7 +28,7 @@
     <c:set value="${pageBuilderParser:getTemplateFragments(htmlSrcCode)}" var="htmlSlices" />
     <c:forEach items="${htmlSlices}" var="templateFragment">
         <c:choose>
-            <c:when test="${templateFragment.type eq 'TEMPLATE_AREA' and templateFragment.type eq 'jnt:contentList'}">
+            <c:when test="${templateFragment.type eq 'TEMPLATE_AREA'}">
                 ${templateFragment.startTag.toString()}
                     <template:area
                             path="${templateFragment.path}"
@@ -39,7 +39,7 @@
                     />
                 </${templateFragment.startTag.name}>
             </c:when>
-            <c:when test="${templateFragment.type eq 'TEMPLATE_AREA'}">
+            <c:when test="${templateFragment.type eq 'TEMPLATE_MODULE'}">
                 ${templateFragment.startTag.toString()}
                     <template:module path="${templateFragment.path}" nodeTypes="${templateFragment.areaType}"/>
                 </${templateFragment.startTag.name}>
