@@ -28,19 +28,17 @@
     <c:forEach var="node" items="${navPages}">
         <c:set var="children" value="${jcr:getChildrenOfType(node, 'jnt:page')}"/>
         <c:set var="showLvl2Pages" value="${(not empty children) && currentNode.properties['showLvl2Pages'].boolean}"/>
-        <c:set var="lvl1classes" value="${currentNode.properties['lvl1ItemClasses']}
-            ${ (currentPagePath eq node.path) ? currentNode.properties['currentPageClasses'] : ''}
-            ${ showLvl2Pages ? currentNode.properties['hasSubpagesClasses'] : '' }"/>
 
-        <${liTag} class="${lvl1classes}">
+        <${liTag} class="${currentNode.properties['lvl1ItemClasses']}${' '}
+            ${ (currentPagePath eq node.path) ? currentNode.properties['currentPageClasses'] : ''}${' '}
+            ${ showLvl2Pages ? currentNode.properties['hasSubpagesClasses'] : '' }">
         <c:url value="${node.url}" var="nodeUrl"/>
         <a href="${nodeUrl}">${node.displayableName}</a>
         <c:if test="${showLvl2Pages}">
             <${ulTag} class="${currentNode.properties['lvl2ListClasses']}">
             <c:forEach var="child" items="${children}">
-                <${liTag} class="${currentNode.properties['lvl2ItemClasses']}"
-                    ${ (currentPagePath eq node.path) ? currentNode.properties['currentPageClasses'] : ''}>
-
+                <${liTag} class="${currentNode.properties['lvl2ItemClasses']}${' '}
+                    ${ (currentPagePath eq child.path) ? currentNode.properties['currentPageClasses'] : ''}">
                 <c:url value="${child.url}" var="childUrl"/>
                 <a href="${childUrl}">${child.displayableName}</a>
                 </${liTag}>
