@@ -28,7 +28,7 @@
     <c:set value="${pageBuilderParser:getTemplateFragments(htmlSrcCode)}" var="htmlSlices" />
     <c:forEach items="${htmlSlices}" var="templateFragment">
         <c:choose>
-            <c:when test="${templateFragment.type eq 'TEMPLATE_AREA'}">
+            <c:when test="${templateFragment.type eq 'TEMPLATE_AREA' and templateFragment.type eq 'jnt:contentList'}">
                 ${templateFragment.startTag.toString()}
                     <template:area
                             path="${templateFragment.path}"
