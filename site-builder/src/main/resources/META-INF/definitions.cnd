@@ -11,13 +11,10 @@ itemtype = content
 
 [sbmix:pageOverrides] mixin
 extends = jnt:page
-- cssOverride (weakreference, picker[type='file']) multiple < jnt:file
- - * (string)
-- jsHeadOverride (weakreference, picker[type='file']) multiple < jnt:file
- - * (string)
-- jsBodyOverride (weakreference, picker[type='file']) multiple < jnt:file
- - * (string)
-- pageHeadOverride (string, textarea)
+- cssOverride (weakreference, picker[type='file']) indexed=no multiple < jnt:file
+- jsHeadOverride (weakreference, picker[type='file']) indexed=no multiple < jnt:file
+- jsBodyOverride (weakreference, picker[type='file']) indexed=no multiple < jnt:file
+- pageHeadOverride (string, textarea) indexed=no
 
 [sbmix:imgCustomAttribute] mixin
  extends = jnt:imageReferenceLink
