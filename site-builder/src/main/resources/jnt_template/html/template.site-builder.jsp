@@ -33,7 +33,6 @@
 <c:set var="ctxNode" value="${renderContext.mainResource.node}"/>
 
 <%-- JSP START --%>
-
 <c:set var="headResources" value="${r:headResources(renderContext)}"/>
 <c:forEach var="resource" items="${headResources}">
     <template:addCacheDependency flushOnPathMatchingRegexp="${resource.resourceUrl}"/>
