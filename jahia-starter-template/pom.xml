@@ -50,20 +50,20 @@
                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>jahia-modules</artifactId>
         <groupId>org.jahia.modules</groupId>
+        <artifactId>jahia-modules</artifactId>
         <version>8.0.2.0-SNAPSHOT</version>
     </parent>
-    <artifactId>site-builder-template-components</artifactId>
-    <name>site-builder-template-components</name>
-    <version>0.1.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
-    <description>This is the custom module (site-builder-template-components) for running on a Jahia server.</description>
 
-    <scm>
-        <connection>scm:dummy:uri</connection>
-        <developerConnection>scm:dummy:uri</developerConnection>
-    </scm>
+    <artifactId>jahia-starter-template</artifactId>
+    <name>Start with your HTML</name>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>bundle</packaging>
+    <description>This is the custom profile module (jahia-starter-template) for running on a Jahia server.</description>
+
+    <properties>
+        <jahia-module-signature>MCwCFFZ1HSpZD2H/w8Ye6h1fLGCu1OTcAhQgeAXgiA9kP03ZuheuTmE7aRxw7A==</jahia-module-signature>
+    </properties>
 
     <repositories>
         <repository>
@@ -80,6 +80,20 @@
         </repository>
     </repositories>
 
+    <dependencies>
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>jsp-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jahia.test</groupId>
+            <artifactId>module-test-framework</artifactId>
+            <version>8.0.1.0</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>
@@ -88,16 +102,19 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <!-- Jahia manifest attributes -->
+                        <Jahia-Module-Type>templatesSet</Jahia-Module-Type>
                         <Jahia-Depends>default</Jahia-Depends>
                     </instructions>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
+                <configuration>
+                    <includesFile>src/test/java/org/jahia/modules/jahiastartertemplate/taglibs/JahiaStarterTemplateTestSuite.java</includesFile>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-
-    <modules>
-        <module>page-builder-components</module>
-        <module>jahia-starter-template</module>
-    </modules>
 </project>

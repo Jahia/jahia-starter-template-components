@@ -56,10 +56,10 @@ jobs:
             - ~/.m2
           key: v2-dependencies-{{ checksum "pom.xml" }}
       - run:
-          name: Copy artifacts for site-builder
+          name: Copy artifacts for jahia-starter-template and page-builder-components
           command: |
             mkdir /tmp/artifacts/
-            cp /home/circleci/source/site-builder/target/*.jar /tmp/artifacts/
+            cp /home/circleci/source/jahia-starter-template/target/*.jar /tmp/artifacts/
             cp /home/circleci/source/page-builder-components/target/*.jar /tmp/artifacts/
       - store_artifacts:
           path: /tmp/artifacts/
