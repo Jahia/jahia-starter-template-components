@@ -65,6 +65,18 @@ jobs:
           path: /tmp/artifacts/
       - *persist-workspace
 
+  trigger_package_build:
+    <<: *workdir
+    docker: # run the steps with Docker
+      - image: circleci/openjdk:8-jdk-stretch
+    steps:
+      - run:
+          name: Trigger the build of jahia-starter-template-package
+          command: curl -X POST --url 'https://circleci.com/api/v2/project/gh/Jahia/jahia-starter-template-package/pipeline'
+            --header 'circle-token:'"$CIRCLECI_PIPELINE_LAUNCH_TOKEN"''
+            --header 'content-type:application/json'
+            --data '{ "branch":"'"$CIRCLE_BRANCH"'" }'
+  
   sonar:
     parameters:
       is_pull_request:
@@ -161,6 +173,11 @@ workflows:
       - sonar:
           name: Sonar analysis
           is_pull_request: false
+          context: QA_ENVIRONMENT
+          requires:
+            - build
+      - trigger_package_build:
+          name: Trigger build of jahia-starter-template-package
           context: QA_ENVIRONMENT
           requires:
             - build
