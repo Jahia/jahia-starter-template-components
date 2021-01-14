@@ -4,15 +4,10 @@
 [jmix:pageBuilderComponentMixin] > jmix:accessControllableContent, jmix:droppableContent mixin
 
 [jnt:htmlCodeAsFile] > jnt:content, jmix:pageBuilderComponentMixin
- - sourceFile (weakreference, picker[type='file']) mandatory < 'jnt:file'
- - sourceCode (string, richtext) hidden
- - * (string)
- + * (jnt:htmlCodeAsFile)
+ - sourceFile (weakreference, picker[type='file']) indexed=no mandatory < 'jnt:file'
  + * (jmix:droppableContent)
 
 [jnt:htmlCodeAsText] > jnt:content, jmix:pageBuilderComponentMixin
- - sourceCode (string, textarea) mandatory
- - * (string)
- + * (jnt:htmlCodeAsText)
+ - sourceCode (string, textarea) indexed=no mandatory
  + * (jmix:droppableContent)
 
