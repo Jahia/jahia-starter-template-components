@@ -19,7 +19,7 @@ public final class HeadResourceFunctions {
     /**
      * Gets css and js resources urls
      *
-     * @param ctx render contect
+     * @param ctx render context
      * @return List<Resource>
      * @throws RepositoryException RepositoryException
      */
@@ -48,6 +48,9 @@ public final class HeadResourceFunctions {
             cssFiles = TaglibUtils.filterMinFileDuplicates(cssFiles);
             jsFiles = TaglibUtils.filterMinFileDuplicates(jsFiles);
         }
+
+        cssFiles.sort(new AlphabeticNodeNameComparator());
+        jsFiles.sort(new AlphabeticNodeNameComparator());
 
         List<Resource> resources = new ArrayList<>();
 

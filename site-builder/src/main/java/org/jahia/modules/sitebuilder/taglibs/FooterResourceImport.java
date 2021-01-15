@@ -54,6 +54,8 @@ public class FooterResourceImport extends AbstractJahiaTag {
             jsFiles = TaglibUtils.filterMinFileDuplicates(jsFiles);
         }
 
+        jsFiles.sort(new AlphabeticNodeNameComparator());
+
         StringBuilder sb = new StringBuilder();
         jsFiles.forEach(node -> sb.append(String.format("<script type = \"text/javascript\" src = \"%s\" ></script>%n", node.getUrl())));
 
