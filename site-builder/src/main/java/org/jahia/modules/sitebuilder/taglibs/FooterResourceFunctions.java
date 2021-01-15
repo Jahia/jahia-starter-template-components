@@ -6,6 +6,7 @@ import org.jahia.services.render.RenderContext;
 
 import javax.jcr.RepositoryException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -41,7 +42,7 @@ public class FooterResourceFunctions {
             jsFiles = TaglibUtils.filterMinFileDuplicates(jsFiles);
         }
 
-        jsFiles.sort(new AlphabeticNodeNameComparator());
+        jsFiles.sort(Comparator.comparing(JCRNodeWrapper::getName));
 
         List<Resource> resources = new ArrayList<>();
 

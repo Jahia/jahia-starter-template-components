@@ -6,6 +6,7 @@ import org.jahia.services.render.RenderContext;
 
 import javax.jcr.RepositoryException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -49,8 +50,8 @@ public final class HeadResourceFunctions {
             jsFiles = TaglibUtils.filterMinFileDuplicates(jsFiles);
         }
 
-        cssFiles.sort(new AlphabeticNodeNameComparator());
-        jsFiles.sort(new AlphabeticNodeNameComparator());
+        cssFiles.sort(Comparator.comparing(JCRNodeWrapper::getName));
+        jsFiles.sort(Comparator.comparing(JCRNodeWrapper::getName));
 
         List<Resource> resources = new ArrayList<>();
 
