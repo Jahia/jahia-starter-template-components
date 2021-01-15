@@ -1,0 +1,21 @@
+.jst-description {
+   display: flex;
+   align-items: center;
+   margin: 4px 0;
+   padding: 8px;
+   border-radius: 4px;
+   background-color: #f2f2f2;
+   font-size: 12px;
+}
+
+.jst-description.hide {
+   display: none;
+}
+
+.jst-description svg {
+   margin-right: 4px;
+}
+
+.gwt-HTML:hover .jst-description.hide {
+  display: block;
+}
