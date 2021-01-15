@@ -34,3 +34,5 @@ this order: A.js, B.js, C.js and D.js in `Preview` and `Live` modes. Only A.js a
 ### Custom Scripts and Page Specific Files.
 
 Custom scripts and page specific files are loaded in all modes in declared order.
+
+Page specific files are always loaded after files loaded for specific mode. 
