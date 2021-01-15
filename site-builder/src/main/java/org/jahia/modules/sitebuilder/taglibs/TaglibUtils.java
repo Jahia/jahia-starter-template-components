@@ -9,6 +9,7 @@ import org.jahia.services.render.RenderContext;
 import javax.jcr.RepositoryException;
 import javax.jcr.query.Query;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,6 +38,7 @@ public final class TaglibUtils {
             String optionalOR = i != 0 ? "or" : "";
             sb.append(String.format(" %s isdescendantnode(file, '%s')", optionalOR, paths.get(i)));
         }
+        sb.append(" order by [j:nodename] asc");
 
         QueryResultWrapper result = renderContext.getMainResource().getNode().getSession().getWorkspace()
                 .getQueryManager().createQuery(sb.toString(), Query.JCR_SQL2).execute();
@@ -77,6 +79,9 @@ public final class TaglibUtils {
                 .collect(Collectors.toList());
 
         minList.addAll(allNotMin);
+
+        //need to re-sort the files by alphabetical order
+        minList.sort(Comparator.comparing(JCRNodeWrapper::getName));
         return minList;
     }
 }
