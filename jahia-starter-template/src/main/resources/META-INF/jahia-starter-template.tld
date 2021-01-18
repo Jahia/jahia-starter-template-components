@@ -11,12 +11,6 @@
     <short-name>jahiastartertemplate</short-name>
     <uri>http://www.jahia.org/jahiastartertemplate/resourceimport</uri>
     <tag>
-        <description>Tag to be used for import of resource filer into footer.</description>
-        <name>footerResources</name>
-        <tag-class>org.jahia.modules.jahiastartertemplate.taglibs.FooterResourceImport</tag-class>
-        <body-content>JSP</body-content>
-    </tag>
-    <tag>
         <description>Tag to be used for import of custom script into head.</description>
         <name>customScript</name>
         <tag-class>org.jahia.modules.jahiastartertemplate.taglibs.CustomScriptImport</tag-class>
