@@ -1,0 +1,29 @@
+package org.jahia.modules.jahiastartertemplate.rules
+
+// list any import classes here.
+import org.jahia.services.content.rules.*
+import org.jahia.services.content.JCRContentUtils
+import org.slf4j.Logger
+import org.jahia.services.cache.CacheHelper
+
+expander rules.dsl
+
+// declare any global variables here
+global User user
+global Service service
+global Logger logger
+global JCRContentUtils jcrUtils
+global CacheHelper cacheHelper
+
+rule "New assets are published under /files/assets"
+    salience 100
+    when
+        - installed modules contains jahia-starter-template
+        A node is published
+            - it has the type jnt:file
+            - it is in /sites/[^/]*/files/assets
+        The node has a parent
+            - the parent has the type jnt:folder
+    then
+        > CacheHelper.flushOutputCachesForPath("/sites/" + node.getNode().getResolveSite().getSiteKey(), true);
+end
