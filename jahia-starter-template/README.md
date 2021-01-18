@@ -45,3 +45,86 @@ Page specific files are always loaded after all files loaded for specific mode.
 * To add page specific custom script edit a page in Page Composer and enable `ADD CSS/JS RESOURCES TO THIS PAGE`
 
 * To add page specific file edit a page in Page Composer and enable `ADD CSS/JS RESOURCES TO THIS PAGE`
+
+---
+## Navigation Menu component
+
+Provides a component that renders HTML for a navigation menu and allows for HTML class and CSS customizations. This component reflects the
+page structure of the parent page where the navigation menu component has been added.  For example, if the navigation menu is added in the
+header, then it'll reflect the page navigation structure under the home page. If it's added within the body, then it'll reflect the navigation
+structure within the given page itself. For simplicity, the HTML structure rendered only allows up to two levels of page hierarchy at any
+given time.
+
+As an example, given the following page structure for a navigation menu component added to the header section:
+
+```
+* Home
+    * Page 1
+        * Subpage 1
+        * Subpage 2
+    * Page 2
+        * Subpage 3
+            * Subpage 4
+    * Page 3
+
+```
+
+The HTML is generated as follows depending on what _Navigation menu type_ option is selected within the navigation menu component
+properties:
+
+```
+<nav>
+    <ul>
+        <li>
+            <a href="page1.html">Page 1</a>
+            <ul>
+                <li><a href="subpage1.html">Subpage 1</a></li>
+                <li><a href="subpage1.html">Subpage 2</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="page2.html">Page 2</a>
+            <ul>
+                <li><a href="subpage3.html">Subpage 3</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="page3.html">Page 3</a>
+        </li>
+    </ul>
+</nav>
+```
+
+The option _Use `<ul>` and `<li>` tags_ is selected by default and generates HTML structure above. If the option _Use nested `<div>`
+tags"_ is selected, then the `<ul>` and `<li>` tags are replaced by `<div>` tags instead. Note that _Subpage 4_ is not included as it is
+past the two-level limit of the component.
+
+There is also a toggle option _Include Level 2 pages_ enabled by default. If disabled, then only the first level page hierarchy is
+included, and the structure above will render the following HTML:
+
+```
+<nav>
+    <ul>
+        <li><a href="page1.html">Page 1</a></li>
+        <li><a href="page2.html">Page 2</a></li>
+        <li><a href="page3.html">Page 3</a></li>
+    </ul>
+</nav>
+```
+
+### Navigation menu class customizations
+
+The component allows the user to provide custom classes at any given level of the navigation menu structure within _Customize HTML tags_
+section. The following is the mapping of the fields to add specified class names depending on the page level:
+
+| _Customize HTML Tag_ fields                              	| HTML element affected                            	| Notes                                                                                            	|
+|--------------------------------------------------------	|--------------------------------------------------	|--------------------------------------------------------------------------------------------------	|
+| `<nav>` container tag classes                          	| `nav`                                            	|                                                                                                  	|
+| Level 1 list classes                                   	| `nav > ul`                                       	|                                                                                                  	|
+| Level 1 item classes                                   	| `nav > ul > li`                                  	|                                                                                                  	|
+| Additional classes <br>for Level 1 items with subpages 	| `nav > ul > li`                                  	| only if _Include level 2 pages_are enabled <br>and there are level 2 pages added within the page 	|
+| Level 2 list classes                                   	| `nav > ul > li > ul`                             	| only if _Include level 2 pages_ are enabled <br>and there are level 2 pages added                	|
+| Level 2 item classes                                   	| `nav > ul > li > ul > li`                        	| only if _Include level 2 pages_ are enabled <br>and there are level 2 pages added                	|
+| Current page classes                                   	| `nav > ul > li` or<br> `nav > ul > li > ul > li` 	| depends on which level the current page belongs                                                  	|
+
+
