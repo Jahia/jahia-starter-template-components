@@ -12,14 +12,6 @@
     <uri>http://www.jahia.org/sitebuilder/resourceimport</uri>
     <tag>
         <description>
-            Tag to be used for import of resource filer into footer.
-        </description>
-        <name>footerResources</name>
-        <tag-class>org.jahia.modules.sitebuilder.taglibs.FooterResourceImport</tag-class>
-        <body-content>JSP</body-content>
-    </tag>
-    <tag>
-        <description>
             Tag to be used for import of custom script into head.
         </description>
         <name>customScript</name>
@@ -36,6 +28,13 @@
         <description>get resources for head (list of css and javascript url)</description>
         <name>headResources</name>
         <function-class>org.jahia.modules.sitebuilder.taglibs.HeadResourceFunctions</function-class>
+        <function-signature>java.util.List getResources(org.jahia.services.render.RenderContext)</function-signature>
+        <example>${r:headResources(renderContext)}</example>
+    </function>
+    <function>
+        <description>get resources for footer (list of javascript urls)</description>
+        <name>footerResources</name>
+        <function-class>org.jahia.modules.sitebuilder.taglibs.FooterResourceFunctions</function-class>
         <function-signature>java.util.List getResources(org.jahia.services.render.RenderContext)</function-signature>
         <example>${r:headResources(renderContext)}</example>
     </function>

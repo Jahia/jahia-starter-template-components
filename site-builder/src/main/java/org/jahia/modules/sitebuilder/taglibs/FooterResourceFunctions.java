@@ -10,15 +10,16 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * Resource tag lib function
+ * Loads resources into footer
  */
-public final class HeadResourceFunctions {
+public class FooterResourceFunctions {
 
-    private HeadResourceFunctions() {
+
+    private FooterResourceFunctions() {
     }
 
     /**
-     * Gets css and js resources urls
+     * Gets js resources urls
      *
      * @param ctx render context
      * @return List<Resource>
@@ -26,36 +27,25 @@ public final class HeadResourceFunctions {
      */
     public static List<Resource> getResources(RenderContext ctx) throws RepositoryException {
         String siteKey = ctx.getSite().getSiteKey();
-        List<String> cssPaths = new ArrayList<>();
         List<String> jsPaths = new ArrayList<>();
 
         // Add global paths
-        cssPaths.add(String.format("/sites/%s/files/assets/global/css", siteKey));
-        jsPaths.add(String.format("/sites/%s/files/assets/global/jsHead", siteKey));
-
-        if (ctx.isEditMode()) {
-            cssPaths.add(String.format("/sites/%s/files/assets/pageComposerOnly/css", siteKey));
-        }
+        jsPaths.add(String.format("/sites/%s/files/assets/global/jsFooter", siteKey));
 
         if (ctx.isPreviewMode() || ctx.isLiveMode()) {
-            cssPaths.add(String.format("/sites/%s/files/assets/previewAndLive/css", siteKey));
-            jsPaths.add(String.format("/sites/%s/files/assets/previewAndLive/jsHead", siteKey));
+            jsPaths.add(String.format("/sites/%s/files/assets/previewAndLive/jsFooter", siteKey));
         }
 
-        List<JCRNodeWrapper> cssFiles = TaglibUtils.getFileNodes(cssPaths, ctx);
         List<JCRNodeWrapper> jsFiles = TaglibUtils.getFileNodes(jsPaths, ctx);
 
         if (ctx.isLiveMode()) {
-            cssFiles = TaglibUtils.filterMinFileDuplicates(cssFiles);
             jsFiles = TaglibUtils.filterMinFileDuplicates(jsFiles);
         }
 
-        cssFiles.sort(Comparator.comparing(JCRNodeWrapper::getName));
         jsFiles.sort(Comparator.comparing(JCRNodeWrapper::getName));
 
         List<Resource> resources = new ArrayList<>();
 
-        cssFiles.forEach(file -> resources.add(new Resource("css", file.getUrl())));
         jsFiles.forEach(file -> resources.add(new Resource("js", file.getUrl())));
 
         return resources;

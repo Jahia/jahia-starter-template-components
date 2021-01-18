@@ -32,7 +32,7 @@
 
 <c:set var="ctxNode" value="${renderContext.mainResource.node}"/>
 
-<%-- JSP START --%>
+<%-- BEGIN: head resources --%>
 <c:set var="headResources" value="${r:headResources(renderContext)}"/>
 <c:forEach var="resource" items="${headResources}">
     <template:addCacheDependency flushOnPathMatchingRegexp="${resource.resourceUrl}"/>
@@ -46,6 +46,35 @@
     </c:choose>
 </c:forEach>
 
+<%-- page css overrides --%>
+<c:forEach var="url" items="${r:getPageOverrides(ctxNode, CSS_OVERRIDE_PROP, CSS)}">
+    <template:addResources type="css" resources="${url}"/>
+</c:forEach>
+
+<%-- page head javascript overrides --%>
+<c:forEach var="url" items="${r:getPageOverrides(ctxNode, JS_HEAD_OVERRIDE_PROP, JAVASCRIPT)}">
+    <template:addResources type="javascript" resources="${url}"/>
+</c:forEach>
+<%--END: head resources--%>
+
+
+<%--BEGIN: Footer resources (body tag)--%>
+<c:set var="footerResources" value="${r:footerResources(renderContext)}"/>
+<c:forEach var="resource" items="${footerResources}">
+    <template:addCacheDependency flushOnPathMatchingRegexp="${resource.resourceUrl}"/>
+    <c:choose>
+        <c:when test="${resource.type eq 'js'}">
+            <template:addResources type="javascript" resources="${resource.resourceUrl}" targetTag="body"/>
+        </c:when>
+    </c:choose>
+</c:forEach>
+
+<%-- page body javascript overrides --%>
+<c:forEach var="url" items="${r:getPageOverrides(ctxNode, JS_BODY_OVERRIDE_PROP, JAVASCRIPT)}">
+    <template:addResources type="javascript" resources="${url}" targetTag="body"/>
+</c:forEach>
+<%--END: Footer resources--%>
+
 <%-- Page override banner --%>
 <c:if test="${renderContext.editMode}">
     <c:set var="renderCtx" value="${renderContext}" scope="request"/>
@@ -58,34 +87,16 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>${fn:escapeXml(ctxNode.displayableName)}</title>
 
-    <%--Import resources--%>
+<%--BEGIN: custom scripts--%>
+    <%--Site level custom scripts--%>
     <r:customScript/>
-
-    <%-- page css overrides --%>
-    <c:forEach var="url" items="${r:getPageOverrides(ctxNode, CSS_OVERRIDE_PROP, CSS)}">
-        <template:addResources type="css" resources="${url}"/>
-    </c:forEach>
-
-    <%-- page head javascript overrides --%>
-    <c:forEach var="url" items="${r:getPageOverrides(ctxNode, JS_HEAD_OVERRIDE_PROP, JAVASCRIPT)}">
-        <template:addResources type="javascript" resources="${url}"/>
-    </c:forEach>
-
     <%-- page custom snippet override --%>
     <r:pageCustomSnippet/>
+<%--END: custom scripts--%>
 </head>
 
 <body>
-
     <template:area path="pagecontent"/>
-
-    <%-- page body javascript overrides --%>
-    <c:forEach var="url" items="${r:getPageOverrides(ctxNode, JS_BODY_OVERRIDE_PROP, JAVASCRIPT)}">
-        <template:addResources type="javascript" resources="${url}" targetTag="body"/>
-    </c:forEach>
-
-    <%--Import resources--%>
-    <r:footerResources/>
 </body>
 
 </html>
