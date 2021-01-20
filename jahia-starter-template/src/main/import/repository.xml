@@ -91,7 +91,7 @@
                <pagecontent jcr:mixinTypes="jmix:systemNameReadonly"
                             jcr:primaryType="jnt:contentList">
                   <header j:limitedAbsoluteAreaEdit="false" jcr:primaryType="jnt:absoluteArea"/>
-                  <pagecontent j:allowedTypes="jmix:pageBuilderComponentMixin"
+                  <pagecontent j:allowedTypes="jnt:htmlCodeAsFile jnt:htmlCodeAsText"
                                jcr:primaryType="jnt:area"/>
                   <footer j:allowedTypes="jmix:droppableContent"
                           j:limitedAbsoluteAreaEdit="false"

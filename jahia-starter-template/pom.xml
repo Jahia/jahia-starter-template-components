@@ -103,7 +103,7 @@
                 <configuration>
                     <instructions>
                         <Jahia-Module-Type>templatesSet</Jahia-Module-Type>
-                        <Jahia-Depends>default</Jahia-Depends>
+                        <Jahia-Depends>default,page-builder-components</Jahia-Depends>
                     </instructions>
                 </configuration>
             </plugin>
