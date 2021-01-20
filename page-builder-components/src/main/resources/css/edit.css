@@ -16,6 +16,6 @@
    margin-right: 4px;
 }
 
-.gwt-HTML:hover .jst-description.hide {
+.gwt-HTML:hover > .jst-description.hide {
   display: block;
 }
