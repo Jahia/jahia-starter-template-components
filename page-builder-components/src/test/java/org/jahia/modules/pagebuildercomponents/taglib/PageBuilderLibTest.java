@@ -179,4 +179,34 @@ public class PageBuilderLibTest {
         Assert.assertEquals("Incorrect path for area", actualHtmlChunks.get(0).getPath(), fragment.getPath());
         Assert.assertEquals("Incorrect types for area", String.join(" ", actualHtmlChunks.get(0).getTypes()), types);
     }
+
+    @Test
+    public void testRichTextHandler() {
+        int expectedSize = 1;
+
+        TemplateFragment fragment = new TemplateFragment();
+        fragment.setPath("mypath");
+        fragment.setAreaType("jnt:bigText");
+
+        String testHtmlCode = String.format("<div data-jahia-richtext='%s'></div>", fragment.getPath());
+        List<TemplateFragment> actualHtmlChunks = PageBuilderLib.getTemplateFragments(testHtmlCode);
+        Assert.assertEquals("It should only have one slice", expectedSize, actualHtmlChunks.size());
+        Assert.assertEquals("Incorrect path for rich text", actualHtmlChunks.get(0).getPath(), fragment.getPath());
+        Assert.assertEquals("Incorrect area type for rich text", actualHtmlChunks.get(0).getAreaType(), fragment.getAreaType());
+    }
+
+    @Test
+    public void testImageHandler() {
+        int expectedSize = 1;
+
+        TemplateFragment fragment = new TemplateFragment();
+        fragment.setPath("mypath");
+        fragment.setAreaType("jnt:imageReferenceLink");
+
+        String testHtmlCode = String.format("<div data-jahia-image='%s'></div>", fragment.getPath());
+        List<TemplateFragment> actualHtmlChunks = PageBuilderLib.getTemplateFragments(testHtmlCode);
+        Assert.assertEquals("It should only have one slice", expectedSize, actualHtmlChunks.size());
+        Assert.assertEquals("Incorrect path for image reference", actualHtmlChunks.get(0).getPath(), fragment.getPath());
+        Assert.assertEquals("Incorrect area type for image reference", actualHtmlChunks.get(0).getAreaType(), fragment.getAreaType());
+    }
 }

@@ -13,3 +13,7 @@
 3. `data-jahia-area-types` used as `data-jahia-area-types="jnt:text,jnt:bigText"`
 
 4. `data-jahia-text` used as `data-jahia-text="textname"`
+
+5. `data-jahia-richtext` used as `data-jahia-richtext="textname"`
+
+6. `data-jahia-image` used as `data-jahia-text="imagename"`
