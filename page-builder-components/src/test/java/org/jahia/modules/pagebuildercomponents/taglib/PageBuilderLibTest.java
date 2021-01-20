@@ -1,14 +1,3 @@
-package org.jahia.modules.pagebuildercomponents.taglib;
-
-import org.jahia.modules.pagebuildercomponents.model.HtmlElementType;
-import org.jahia.modules.pagebuildercomponents.model.TemplateFragment;
-import org.junit.Assert;
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 /*
  * ==========================================================================================
  * =                            JAHIA'S ENTERPRISE DISTRIBUTION                             =
@@ -19,7 +8,7 @@ import java.util.List;
  * JAHIA'S ENTERPRISE DISTRIBUTIONS LICENSING - IMPORTANT INFORMATION
  * ==========================================================================================
  *
- *     Copyright (C) 2002-2020 Jahia Solutions Group. All rights reserved.
+ *     Copyright (C) 2002-2021 Jahia Solutions Group. All rights reserved.
  *
  *     This file is part of a Jahia's Enterprise Distribution.
  *
@@ -32,6 +21,17 @@ import java.util.List;
  *
  * ==========================================================================================
  */
+package org.jahia.modules.pagebuildercomponents.taglib;
+
+import org.jahia.modules.pagebuildercomponents.model.HtmlElementType;
+import org.jahia.modules.pagebuildercomponents.model.TemplateFragment;
+import org.junit.Assert;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class PageBuilderLibTest {
 
     @Test
