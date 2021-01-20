@@ -15,6 +15,8 @@ public class Handlers {
 
     enum Type {
         TEXT("text"),
+        RICH_TEXT("richtext"),
+        IMAGE_REFERENCE("image"),
         LIMIT("limit"),
         TYPES("types"),
         AREA("area");
