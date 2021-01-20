@@ -27,6 +27,11 @@ import net.htmlparser.jericho.Attribute;
 import net.htmlparser.jericho.Attributes;
 import net.htmlparser.jericho.Source;
 import net.htmlparser.jericho.StartTag;
+import net.htmlparser.jericho.Element;
+import net.htmlparser.jericho.Segment;
+import net.htmlparser.jericho.CharacterReference;
+import net.htmlparser.jericho.Tag;
+import net.htmlparser.jericho.EndTag;
 import org.jahia.modules.pagebuildercomponents.exception.PageBuilderException;
 import org.jahia.modules.pagebuildercomponents.handlers.Handlers;
 import org.jahia.modules.pagebuildercomponents.model.HtmlElementType;
@@ -36,9 +41,10 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.Iterator;
+import java.util.Stack;
+
 
 /**
  * This Java utility class contains a series of libraries that parses
@@ -49,8 +55,6 @@ import java.util.stream.Collectors;
 public final class PageBuilderLib {
     public static final String JAHIA_ATTRIBUTE = "data-jahia-";
     private static final Logger log = LoggerFactory.getLogger(PageBuilderLib.class);
-    private static final String REGEX_PATTERNS = String.format("<(.+?)%s(.+?)=(.+?)></(.+?)>", JAHIA_ATTRIBUTE);
-    private static final Pattern PATTERN = Pattern.compile(REGEX_PATTERNS, Pattern.MULTILINE);
 
     /**
      * Adding an non-public constructor to prevent Java from implicitly creating one
@@ -68,49 +72,63 @@ public final class PageBuilderLib {
     public static List<TemplateFragment> getTemplateFragments(String htmlSource) {
         log.debug("Creating html chunks");
         List<TemplateFragment> htmlElements = new ArrayList<>();
-        Matcher matcher = PATTERN.matcher(htmlSource);
-        int startIndex = 0;
-        String value = "";
-        while (matcher.find() && !matcher.group(0).isEmpty()) {
-            log.debug("Retrieving only html snippet");
-            value = htmlSource.substring(startIndex, matcher.start()).trim();
-            if (!value.isEmpty()) {
-                htmlElements.add(createHtmlFragment(value));
+        Source source = new Source(htmlSource);
+        Iterator<Segment> sourceSegNodeIterator = source.getNodeIterator();
+        String ignoreEmbeddedElements = "";
+        int ignoreCount = 0;
+        Stack<String> tagStack = new Stack<>();
+
+        try {
+            while (sourceSegNodeIterator.hasNext()) {
+                Segment sourceSeg = sourceSegNodeIterator.next();
+                if (sourceSeg instanceof Tag) {
+                    if (sourceSeg instanceof StartTag) {
+                        // Add the start tag name to the list to check for valid HTML
+                        tagStack.push(((StartTag) sourceSeg).getName());
+                        if (!ignoreEmbeddedElements.isEmpty()) {
+                            if (ignoreEmbeddedElements.equals(((StartTag) sourceSeg).getName()))
+                                ignoreCount++;
+                            continue;
+                        }
+                        Element element = ((StartTag) sourceSeg).getElement();
+                        List<Attribute> attributes = collectJahiaAttributes(element.getAttributes());
+                        // Assuming if there is per the list of attributes
+                        if (attributes != null && !attributes.isEmpty()) {
+                            TemplateFragment templateFragment = createTemplateAreaFragment(element.getStartTag());
+                            applyAttributesToTemplateArea(templateFragment, attributes);
+                            htmlElements.add(templateFragment);
+                            ignoreEmbeddedElements = ((StartTag) sourceSeg).getName();
+                            ignoreCount++;
+                        } else {
+                            htmlElements.add(createHtmlFragment(sourceSeg.toString())); // add back the information
+                        }
+
+                    } else if (sourceSeg instanceof EndTag) {
+                        if (ignoreEmbeddedElements.equals(((EndTag) sourceSeg).getName())) {
+                            if (ignoreCount == 1)
+                                ignoreEmbeddedElements = ""; // reset
+                            ignoreCount--;
+                        } else if (ignoreEmbeddedElements.isEmpty()) {
+                            htmlElements.add(createHtmlFragment(sourceSeg.toString())); // add back the information
+                        }
+                        // Break-out as malformed-HTML if tags doesn't match in order
+                        if (tagStack.isEmpty() || tagStack.peek() == null || !tagStack.peek().equals(((EndTag) sourceSeg).getName())) {
+                            throw new PageBuilderException(String.format("The html tag %s does not match starting tag in stack.", ((EndTag) sourceSeg).getName()));
+                        }
+                        tagStack.pop(); // Remove the start-tag
+                    }
+                } else if (!(sourceSeg instanceof Tag) && !(sourceSeg instanceof CharacterReference)) {
+                    if (!sourceSeg.toString().isEmpty() && ignoreEmbeddedElements.isEmpty()) { // For text base
+                        htmlElements.add(createHtmlFragment(sourceSeg.toString()));
+                    }
+                }
             }
-            log.debug("Creating the HtmlElement of the tag with the jahia attribute only");
-            Source source = new Source(matcher.group(0));
-            if (source.getAllStartTags().size() != 1) {
-                throw new PageBuilderException(
-                        String.format("The html tag with the %s attribute needs to be an empty tag.", JAHIA_ATTRIBUTE));
-            }
-            StartTag startTag = source.getAllStartTags().get(0);
-            List<Attribute> attributes = getAttributes(matcher.group(0).trim());
-            TemplateFragment templateFragment = createTemplateAreaFragment(startTag);
-            applyAttributesToTemplateArea(templateFragment, attributes);
-            htmlElements.add(templateFragment);
-            startIndex = matcher.end();
-        }
-        value = htmlSource.substring(startIndex).trim();
-        if (!value.isEmpty()) {
-            htmlElements.add(createHtmlFragment(value));
+            if(!tagStack.isEmpty()) throw new PageBuilderException("The html tags doesn't fully match malformed-html source.");
+        } catch (PageBuilderException exception) {
+            htmlElements.clear(); // Clear the existing HTML elements
+            htmlElements.add(createHtmlFragment(exception.getMessage())); // Add the error message
         }
         return htmlElements;
-    }
-
-    private static List<Attribute> getAttributes(String tag) {
-        if (!tag.contains(JAHIA_ATTRIBUTE)) {
-            throw new PageBuilderException(String.format("The tag '%s' does not contain %s", tag, JAHIA_ATTRIBUTE));
-        }
-        Source source = new Source(tag);
-        if (source.getAllElements().size() != 1) {
-            throw new PageBuilderException(String.format("Unable to parse the string '%s'.", tag));
-        }
-        Attributes attributes = source.getAllElements().get(0).getAttributes();
-        if (attributes.isEmpty()) {
-            throw new PageBuilderException(String.format("%s is not found in the tag",JAHIA_ATTRIBUTE));
-        }
-
-        return collectJahiaAttributes(attributes);
     }
 
     private static List<Attribute> collectJahiaAttributes(Attributes attributes) {
