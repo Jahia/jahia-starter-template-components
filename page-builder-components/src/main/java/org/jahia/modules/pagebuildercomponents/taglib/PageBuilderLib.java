@@ -84,8 +84,7 @@ public final class PageBuilderLib {
                         // Add the start tag name to the list to check for valid HTML
                         tagStack.push(startTag); // Reason to add always is to add backward compatibility to HTML 5- syntax
                         if (!ignoreEmbeddedElements.isEmpty()) {
-                            if (ignoreEmbeddedElements.equals(startTag))
-                                ignoreCount++;
+                            if (ignoreEmbeddedElements.equals(startTag)) ignoreCount++;
                             continue;
                         }
                         Element element = ((StartTag) sourceSeg).getElement();
@@ -104,15 +103,14 @@ public final class PageBuilderLib {
                     } else if (sourceSeg instanceof EndTag) {
                         String endTag = (((EndTag) sourceSeg).getName() != null) ? ((EndTag) sourceSeg).getName().toLowerCase() : null;
                         if (ignoreEmbeddedElements.equals(endTag)) {
-                            if (ignoreCount == 1)
-                                ignoreEmbeddedElements = ""; // reset
+                            if (ignoreCount == 1) ignoreEmbeddedElements = ""; // reset
                             ignoreCount--;
                         } else if (ignoreEmbeddedElements.isEmpty()) {
                             htmlElements.add(createHtmlFragment(sourceSeg.toString())); // add back the information
                         }
 
                         // Take out any tags that are void html element before comparison
-                        while(!tagStack.isEmpty() && tagStack.peek() != null && VoidHtmlElement.contains(tagStack.peek()) && !tagStack.peek().equals(endTag)) {tagStack.pop();}
+                        while(!tagStack.isEmpty() && tagStack.peek() != null && !tagStack.peek().equals(endTag) && VoidHtmlElement.contains(tagStack.peek())) {tagStack.pop();}
                         // Break-out as malformed-HTML if tags doesn't match in order
                         if (tagStack.isEmpty() || tagStack.peek() == null) {
                             throw new PageBuilderException(String.format("Parsing error: found closing html tag &lt;&#47;%s&gt; without "
@@ -124,7 +122,7 @@ public final class PageBuilderLib {
                         }
                         tagStack.pop(); // Remove the start-tag
                     }
-                } else if (!(sourceSeg instanceof Tag) && !(sourceSeg instanceof CharacterReference)) {
+                } else if (!(sourceSeg instanceof CharacterReference)) {
                     if (sourceSeg != null && !sourceSeg.toString().isEmpty() && ignoreEmbeddedElements.isEmpty()) { // For text base
                         htmlElements.add(createHtmlFragment(sourceSeg.toString()));
                     }
