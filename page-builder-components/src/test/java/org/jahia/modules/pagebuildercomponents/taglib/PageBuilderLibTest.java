@@ -42,13 +42,13 @@ public class PageBuilderLibTest {
 
     @Test
     public void testHtmlWithoutStartTag() {
-        Assert.assertEquals("Parsing error: found closing html tag </div> without open tag",
+        Assert.assertEquals("Parsing error: found closing html tag &lt;&#47;div&gt; without open tag",
                 PageBuilderLib.getTemplateFragments("</div>").get(0).getRawValue().trim());
     }
 
     @Test
     public void testHtmlMisMatchTag() {
-        Assert.assertEquals("Parsing error: found closing html tag </div> when expecting closing tag </p>",
+        Assert.assertEquals("Parsing error: found closing html tag &lt;&#47;div&gt; when expecting closing tag &lt;&#47;p&gt;",
                 PageBuilderLib.getTemplateFragments("<p></div>").get(0).getRawValue().trim());
     }
 

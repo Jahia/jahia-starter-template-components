@@ -115,11 +115,12 @@ public final class PageBuilderLib {
                         while(!tagStack.isEmpty() && tagStack.peek() != null && VoidHtmlElement.contains(tagStack.peek()) && !tagStack.peek().equals(endTag)) {tagStack.pop();}
                         // Break-out as malformed-HTML if tags doesn't match in order
                         if (tagStack.isEmpty() || tagStack.peek() == null) {
-                            throw new PageBuilderException(String.format("Parsing error: found closing html tag </%s> without open tag",
+                            throw new PageBuilderException(String.format("Parsing error: found closing html tag &lt;&#47;%s&gt; without "
+                                            + "open tag",
                                     endTag));
                         } else if (!VoidHtmlElement.contains(tagStack.peek()) && !tagStack.peek().equals(endTag)) {
-                            throw new PageBuilderException(String.format("Parsing error: found closing html tag </%s> when expecting "
-                                    + "closing tag </%s>", endTag, tagStack.peek()));
+                            throw new PageBuilderException(String.format("Parsing error: found closing html tag &lt;&#47;%s&gt; when expecting "
+                                    + "closing tag &lt;&#47;%s&gt;", endTag, tagStack.peek()));
                         }
                         tagStack.pop(); // Remove the start-tag
                     }
