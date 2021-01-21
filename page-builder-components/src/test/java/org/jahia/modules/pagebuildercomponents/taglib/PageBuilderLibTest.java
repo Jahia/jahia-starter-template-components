@@ -42,20 +42,32 @@ public class PageBuilderLibTest {
 
     @Test
     public void testHtmlWithoutStartTag() {
-        Assert.assertEquals("The html tag div does not match starting tag in stack.",
+        Assert.assertEquals("Parsing error: found closing html tag </div> without open tag",
                 PageBuilderLib.getTemplateFragments("</div>").get(0).getRawValue().trim());
     }
 
     @Test
     public void testHtmlMisMatchTag() {
-        Assert.assertEquals("The html tag div does not match starting tag in stack.",
+        Assert.assertEquals("Parsing error: found closing html tag </div> when expecting closing tag </p>",
                 PageBuilderLib.getTemplateFragments("<p></div>").get(0).getRawValue().trim());
     }
 
     @Test
     public void testHtmlStartEndTagCountDoesNotMatch() {
-        Assert.assertEquals("The html tags doesn't fully match malformed-html source.", PageBuilderLib.getTemplateFragments("<div><div"
+        Assert.assertEquals("Parsing error: found the html tags doesn't fully match malformed-html source", PageBuilderLib.getTemplateFragments("<div><div"
                 + "></div>").get(0).getRawValue().trim());
+    }
+
+    @Test
+    public void testHtmlEdgeCaseVoidElements() {
+        Assert.assertEquals("<br>", PageBuilderLib.getTemplateFragments("<br>").get(0).getRawValue());
+        Assert.assertEquals("<br />", PageBuilderLib.getTemplateFragments("<br />").get(0).getRawValue());
+        Assert.assertEquals("It should only have three slice", 3, PageBuilderLib.getTemplateFragments("<div><br /></div>").size());
+    }
+
+    @Test
+    public void testHtmlCaseInsensitive() {
+        Assert.assertEquals("It should only have three slice", 3, PageBuilderLib.getTemplateFragments("<DiV>123</dIV>").size());
     }
 
     @Test

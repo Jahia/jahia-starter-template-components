@@ -36,15 +36,12 @@ import org.jahia.modules.pagebuildercomponents.exception.PageBuilderException;
 import org.jahia.modules.pagebuildercomponents.handlers.Handlers;
 import org.jahia.modules.pagebuildercomponents.model.HtmlElementType;
 import org.jahia.modules.pagebuildercomponents.model.TemplateFragment;
+import org.jahia.modules.pagebuildercomponents.model.VoidHtmlElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
-import java.util.Iterator;
-import java.util.Stack;
-
 
 /**
  * This Java utility class contains a series of libraries that parses
@@ -83,10 +80,11 @@ public final class PageBuilderLib {
                 Segment sourceSeg = sourceSegNodeIterator.next();
                 if (sourceSeg instanceof Tag) {
                     if (sourceSeg instanceof StartTag) {
+                        String startTag = (((StartTag) sourceSeg).getName() != null) ? ((StartTag) sourceSeg).getName().toLowerCase(): null;
                         // Add the start tag name to the list to check for valid HTML
-                        tagStack.push(((StartTag) sourceSeg).getName());
+                        tagStack.push(startTag); // Reason to add always is to add backward compatibility to HTML 5- syntax
                         if (!ignoreEmbeddedElements.isEmpty()) {
-                            if (ignoreEmbeddedElements.equals(((StartTag) sourceSeg).getName()))
+                            if (ignoreEmbeddedElements.equals(startTag))
                                 ignoreCount++;
                             continue;
                         }
@@ -97,33 +95,44 @@ public final class PageBuilderLib {
                             TemplateFragment templateFragment = createTemplateAreaFragment(element.getStartTag());
                             applyAttributesToTemplateArea(templateFragment, attributes);
                             htmlElements.add(templateFragment);
-                            ignoreEmbeddedElements = ((StartTag) sourceSeg).getName();
+                            ignoreEmbeddedElements = startTag;
                             ignoreCount++;
                         } else {
                             htmlElements.add(createHtmlFragment(sourceSeg.toString())); // add back the information
                         }
 
                     } else if (sourceSeg instanceof EndTag) {
-                        if (ignoreEmbeddedElements.equals(((EndTag) sourceSeg).getName())) {
+                        String endTag = (((EndTag) sourceSeg).getName() != null) ? ((EndTag) sourceSeg).getName().toLowerCase() : null;
+                        if (ignoreEmbeddedElements.equals(endTag)) {
                             if (ignoreCount == 1)
                                 ignoreEmbeddedElements = ""; // reset
                             ignoreCount--;
                         } else if (ignoreEmbeddedElements.isEmpty()) {
                             htmlElements.add(createHtmlFragment(sourceSeg.toString())); // add back the information
                         }
+
+                        // Take out any tags that are void html element before comparison
+                        while(!tagStack.isEmpty() && tagStack.peek() != null && VoidHtmlElement.contains(tagStack.peek()) && !tagStack.peek().equals(endTag)) {tagStack.pop();}
                         // Break-out as malformed-HTML if tags doesn't match in order
-                        if (tagStack.isEmpty() || tagStack.peek() == null || !tagStack.peek().equals(((EndTag) sourceSeg).getName())) {
-                            throw new PageBuilderException(String.format("The html tag %s does not match starting tag in stack.", ((EndTag) sourceSeg).getName()));
+                        if (tagStack.isEmpty() || tagStack.peek() == null) {
+                            throw new PageBuilderException(String.format("Parsing error: found closing html tag </%s> without open tag",
+                                    endTag));
+                        } else if (!VoidHtmlElement.contains(tagStack.peek()) && !tagStack.peek().equals(endTag)) {
+                            throw new PageBuilderException(String.format("Parsing error: found closing html tag </%s> when expecting "
+                                    + "closing tag </%s>", endTag, tagStack.peek()));
                         }
                         tagStack.pop(); // Remove the start-tag
                     }
                 } else if (!(sourceSeg instanceof Tag) && !(sourceSeg instanceof CharacterReference)) {
-                    if (!sourceSeg.toString().isEmpty() && ignoreEmbeddedElements.isEmpty()) { // For text base
+                    if (sourceSeg != null && !sourceSeg.toString().isEmpty() && ignoreEmbeddedElements.isEmpty()) { // For text base
                         htmlElements.add(createHtmlFragment(sourceSeg.toString()));
                     }
                 }
             }
-            if(!tagStack.isEmpty()) throw new PageBuilderException("The html tags doesn't fully match malformed-html source.");
+            // Remove all void HTML elements to check if there are still ones left out
+            List<String> tagList = tagStack.stream().filter(tag -> !VoidHtmlElement.contains(tag)).collect(Collectors.toList());
+            if(!tagList.isEmpty()) throw new PageBuilderException("Parsing error: found the html tags doesn't fully match "
+                    + "malformed-html source");
         } catch (PageBuilderException exception) {
             htmlElements.clear(); // Clear the existing HTML elements
             htmlElements.add(createHtmlFragment(exception.getMessage())); // Add the error message
