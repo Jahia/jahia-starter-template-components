@@ -33,8 +33,20 @@
 <c:set var="ctxNode" value="${renderContext.mainResource.node}"/>
 
 <%-- BEGIN: head resources --%>
-<c:set var="headResources" value="${r:headResources(renderContext)}"/>
-<c:forEach var="resource" items="${headResources}">
+<%-- global overrides --%>
+<c:forEach var="resource" items="${r:getGlobalResources(renderContext)}">
+    <template:addCacheDependency flushOnPathMatchingRegexp="${resource.resourceUrl}"/>
+    <c:choose>
+        <c:when test="${resource.type eq 'css'}">
+            <template:addResources type="css" resources="${resource.resourceUrl}"/>
+        </c:when>
+        <c:when test="${resource.type eq 'js'}">
+            <template:addResources type="javascript" resources="${resource.resourceUrl}"/>
+        </c:when>
+    </c:choose>
+</c:forEach>
+<%-- preview overrides --%>
+<c:forEach var="resource" items="${r:getPreviewResources(renderContext)}">
     <template:addCacheDependency flushOnPathMatchingRegexp="${resource.resourceUrl}"/>
     <c:choose>
         <c:when test="${resource.type eq 'css'}">
@@ -57,6 +69,11 @@
 </c:forEach>
 <%--END: head resources--%>
 
+<%-- page Composer css overrides --%>
+<c:forEach var="resource" items="${r:getPageComposerResources(renderContext)}">
+    <template:addCacheDependency flushOnPathMatchingRegexp="${resource.resourceUrl}"/>
+    <template:addResources type="css" resources="${resource.resourceUrl}"/>
+</c:forEach>
 
 <%--BEGIN: Footer resources (body tag)--%>
 <c:set var="footerResources" value="${r:footerResources(renderContext)}"/>
