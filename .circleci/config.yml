@@ -8,6 +8,18 @@ orbs:
 # Instead, declare those as pipeline parameters (At the top of the config file).
 # This eases portability of the config file across different modules
 parameters:
+  run_pull_request:
+    type: boolean
+    default: false
+  target_branch:
+    type: string
+    default: ""
+  pull_request_number:
+    type: string
+    default: ""
+  github_repository:
+    type: string
+    default: ""
   AUDITCI_LEVEL:
     type: string
     default: "moderate"
@@ -224,21 +236,6 @@ jobs:
           paths:
             - ~/.m2
           key: v3-dependencies-{{ checksum "pom.xml" }}
-
-# Pipeline parameter must be declared
-parameters:
-  run_pull_request:
-    type: boolean
-    default: false
-  target_branch:
-    type: string
-    default: ""
-  pull_request_number:
-    type: string
-    default: ""
-  github_repository:
-    type: string
-    default: ""
 
 workflows:
   version: 2
