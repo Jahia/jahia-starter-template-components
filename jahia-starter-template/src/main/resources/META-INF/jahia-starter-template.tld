@@ -23,18 +23,32 @@
         <body-content>JSP</body-content>
     </tag>
     <function>
-        <description>get resources for head (list of css and javascript url)</description>
-        <name>headResources</name>
+        <description>get global resources for head (list of css and javascript url)</description>
+        <name>getGlobalResources</name>
         <function-class>org.jahia.modules.jahiastartertemplate.taglibs.HeadResourceFunctions</function-class>
-        <function-signature>java.util.List getResources(org.jahia.services.render.RenderContext)</function-signature>
-        <example>${r:headResources(renderContext)}</example>
+        <function-signature>java.util.List getGlobalResources(org.jahia.services.render.RenderContext)</function-signature>
+        <example>${r:getGlobalResources(renderContext)}</example>
+    </function>
+    <function>
+        <description>get preview resources for head (list of css and javascript url)</description>
+        <name>getPreviewResources</name>
+        <function-class>org.jahia.modules.jahiastartertemplate.taglibs.HeadResourceFunctions</function-class>
+        <function-signature>java.util.List getPreviewResources(org.jahia.services.render.RenderContext)</function-signature>
+        <example>${r:getPreviewResources(renderContext)}</example>
+    </function>
+    <function>
+        <description>get pageComposer resources for head (list of css and javascript url)</description>
+        <name>getPageComposerResources</name>
+        <function-class>org.jahia.modules.jahiastartertemplate.taglibs.HeadResourceFunctions</function-class>
+        <function-signature>java.util.List getPageComposerResources(org.jahia.services.render.RenderContext)</function-signature>
+        <example>${r:getPageComposerResources(renderContext)}</example>
     </function>
     <function>
         <description>get resources for footer (list of javascript urls)</description>
         <name>footerResources</name>
         <function-class>org.jahia.modules.jahiastartertemplate.taglibs.FooterResourceFunctions</function-class>
         <function-signature>java.util.List getResources(org.jahia.services.render.RenderContext)</function-signature>
-        <example>${r:headResources(renderContext)}</example>
+        <example>${r:footerResources(renderContext)}</example>
     </function>
     <function>
         <description>Retrieve list of CSS/JS resources for adding page-level overrides</description>

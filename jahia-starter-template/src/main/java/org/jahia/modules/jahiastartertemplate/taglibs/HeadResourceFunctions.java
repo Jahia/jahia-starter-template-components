@@ -41,13 +41,12 @@ public final class HeadResourceFunctions {
     }
 
     /**
-     * Gets css and js resources urls
-     *
-     * @param ctx render context
+     * Get global specific resources
+     * @param ctx   [RenderContext]
      * @return List<Resource>
      * @throws RepositoryException RepositoryException
      */
-    public static List<Resource> getResources(RenderContext ctx) throws RepositoryException {
+    public static List<Resource> getGlobalResources(RenderContext ctx) throws RepositoryException {
         String siteKey = ctx.getSite().getSiteKey();
         List<String> cssPaths = new ArrayList<>();
         List<String> jsPaths = new ArrayList<>();
@@ -56,31 +55,65 @@ public final class HeadResourceFunctions {
         cssPaths.add(String.format("/sites/%s/files/assets/global/css", siteKey));
         jsPaths.add(String.format("/sites/%s/files/assets/global/jsHead", siteKey));
 
-        if (ctx.isEditMode()) {
-            cssPaths.add(String.format("/sites/%s/files/assets/pageComposerOnly/css", siteKey));
-        }
+        List<Resource> resources = new ArrayList<>();
+        resources.addAll(getResourceByPath(cssPaths, ctx, "css", Comparator.comparing(JCRNodeWrapper::getName)));
+        resources.addAll(getResourceByPath(jsPaths, ctx, "js", Comparator.comparing(JCRNodeWrapper::getName)));
+        return resources;
+    }
+
+    /**
+     * Get preview specific resources
+     * @param ctx   [RenderContext]
+     * @return List<Resource>
+     * @throws RepositoryException RepositoryException
+     */
+    public static List<Resource> getPreviewResources(RenderContext ctx) throws RepositoryException {
+        String siteKey = ctx.getSite().getSiteKey();
+        List<String> cssPaths = new ArrayList<>();
+        List<String> jsPaths = new ArrayList<>();
 
         if (ctx.isPreviewMode() || ctx.isLiveMode()) {
             cssPaths.add(String.format("/sites/%s/files/assets/previewAndLive/css", siteKey));
             jsPaths.add(String.format("/sites/%s/files/assets/previewAndLive/jsHead", siteKey));
         }
-
-        List<JCRNodeWrapper> cssFiles = TaglibUtils.getFileNodes(cssPaths, ctx);
-        List<JCRNodeWrapper> jsFiles = TaglibUtils.getFileNodes(jsPaths, ctx);
-
-        if (ctx.isLiveMode()) {
-            cssFiles = TaglibUtils.filterMinFileDuplicates(cssFiles);
-            jsFiles = TaglibUtils.filterMinFileDuplicates(jsFiles);
-        }
-
-        cssFiles.sort(Comparator.comparing(JCRNodeWrapper::getName));
-        jsFiles.sort(Comparator.comparing(JCRNodeWrapper::getName));
-
         List<Resource> resources = new ArrayList<>();
+        resources.addAll(getResourceByPath(cssPaths, ctx, "css", Comparator.comparing(JCRNodeWrapper::getName)));
+        resources.addAll(getResourceByPath(jsPaths, ctx, "js", Comparator.comparing(JCRNodeWrapper::getName)));
+        return resources;
+    }
 
-        cssFiles.forEach(file -> resources.add(new Resource("css", file.getUrl())));
-        jsFiles.forEach(file -> resources.add(new Resource("js", file.getUrl())));
+    /**
+     * Get page composer specific resources
+     * @param ctx   [RenderContext]
+     * @return List<Resource>
+     * @throws RepositoryException RepositoryException
+     */
+    public static List<Resource> getPageComposerResources(RenderContext ctx) throws RepositoryException {
+        String siteKey = ctx.getSite().getSiteKey();
+        List<String> cssPaths = new ArrayList<>();
+        if (ctx.isEditMode()) {
+            cssPaths.add(String.format("/sites/%s/files/assets/pageComposerOnly/css", siteKey));
+        }
+        return getResourceByPath(cssPaths, ctx, "css", Comparator.comparing(JCRNodeWrapper::getName));
+    }
 
+    /**
+     * Helper function get resource by path
+     * @param paths         [List<String>]                      paths
+     * @param ctx           [RenderContext]
+     * @param type          [String]                            resource type tag
+     * @param comparator    [Comparator<? super JCRNodeWrapper>]
+     * @return A
+     * @throws RepositoryException RepositoryException
+     */
+    public static List<Resource> getResourceByPath(List<String> paths, RenderContext ctx, String type,
+            Comparator<? super JCRNodeWrapper> comparator) throws RepositoryException {
+        List<Resource> resources = new ArrayList<>();
+        if(paths == null || paths.isEmpty()) return resources;
+        List<JCRNodeWrapper> fileNodes = TaglibUtils.getFileNodes(paths, ctx);
+        if (ctx.isLiveMode()) fileNodes = TaglibUtils.filterMinFileDuplicates(fileNodes);
+        if(comparator != null) fileNodes.sort(comparator);
+        fileNodes.forEach(file -> resources.add(new Resource(type, file.getUrl())));
         return resources;
     }
 }
