@@ -26,13 +26,16 @@ There are several modes in which assets can be loaded.
 3. Page Composer only mode: loads css files in `Edit` mode only.
     * Navigate to `jContent => Media/files/assets/pageComposerOnly` to upload these files. 
 
-We always load css files first followed by js files. Both css and js files are sorted alphabetically by file name. Note 
-that all applicable assets for a given mode and asset type (css or js) are first collected and then sorted.
+We always load css files first followed by js files in each mode. Both css and js files per mode are sorted alphabetically by file name. 
+
+Note: that all applicable assets for a given mode and asset type (css or js) are first collected and then sorted.
+
+Note: the order of mode by increasing priority is global, preview/live, page override, and page composer.
 
 For Example:
 
 ``If you provide A.js and D.js as global js files and B.js and C.js as preview and live mode files, they will be loaded in 
-this order: A.js, B.js, C.js and D.js in `Preview` and `Live` modes. Only A.js and D.js will be loaded in `Edit` mode. `` 
+this order: A.js, D.js, B.js and C.js in `Preview` and `Live` modes. Only A.js and D.js will be loaded in `Edit` mode. `` 
 
 ### Custom Scripts and Page Specific Files.
 
