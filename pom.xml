@@ -18,14 +18,10 @@
      */
 
 -->
-<<<<<<< HEAD
 <project xmlns="http://maven.apache.org/POM/4.0.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
-=======
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
->>>>>>> 42e631d (Revert "[maven-release-plugin] prepare for next development iteration")
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>jahia-modules</artifactId>
@@ -42,7 +38,7 @@
         <connection>scm:git:git@github.com:Jahia/site-builder-template-components.git</connection>
         <developerConnection>scm:git:git@github.com:Jahia/site-builder-template-components.git</developerConnection>
         <url>https://github.com/Jahia/site-builder-template-components</url>
-        <tag>0.1.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <repositories>
