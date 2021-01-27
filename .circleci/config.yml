@@ -185,7 +185,7 @@ jobs:
             - v3-dependencies-
       - add_ssh_keys:
           fingerprints:
-            - "29:01:4c:71:59:29:c4:65:45:1d:95:1b:59:31:fd:b4"
+            - "7b:b1:07:bf:72:2c:51:b2:26:c9:fa:f2:23:b1:91:1d"
       - run:
           name: Delete github tag <<pipeline.parameters.RELEASE_VERSION>>
           command: |
