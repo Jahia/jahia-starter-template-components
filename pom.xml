@@ -18,7 +18,7 @@
      */
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>jahia-modules</artifactId>
@@ -27,7 +27,7 @@
     </parent>
     <artifactId>site-builder-template-components</artifactId>
     <name>site-builder-template-components</name>
-    <version>0.1.1-SNAPSHOT</version>
+    <version>0.1.0</version>
     <packaging>pom</packaging>
     <description>This is the custom module (site-builder-template-components) for running on a Jahia server.</description>
 
@@ -35,7 +35,7 @@
         <connection>scm:git:git@github.com:Jahia/site-builder-template-components.git</connection>
         <developerConnection>scm:git:git@github.com:Jahia/site-builder-template-components.git</developerConnection>
         <url>https://github.com/Jahia/site-builder-template-components</url>
-        <tag>HEAD</tag>
+        <tag>0.1.0</tag>
     </scm>
 
     <repositories>
