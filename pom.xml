@@ -35,8 +35,10 @@
     <description>This is the custom module (site-builder-template-components) for running on a Jahia server.</description>
 
     <scm>
-        <connection>scm:dummy:uri</connection>
-        <developerConnection>scm:dummy:uri</developerConnection>
+        <connection>scm:git:git@github.com:Jahia/site-builder-template-components.git</connection>
+        <developerConnection>scm:git:git@github.com:Jahia/site-builder-template-components.git</developerConnection>
+        <url>https://github.com/Jahia/site-builder-template-components</url>
+        <tag>HEAD</tag>
     </scm>
 
     <repositories>
