@@ -88,8 +88,4 @@
             </plugin>
         </plugins>
     </build>
-
-  <scm>
-    <tag>0.1.0</tag>
-  </scm>
 </project>
