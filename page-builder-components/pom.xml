@@ -26,7 +26,7 @@
     <version>8.0.0.0</version>
   </parent>
   <artifactId>page-builder-components</artifactId>
-  <version>0.1.0</version>
+  <version>0.1.1-SNAPSHOT</version>
   <packaging>bundle</packaging>
   <name>Page Builder Components</name>
   <description>This is the custom module (Page Builder Components) for running on a Jahia server.</description>
@@ -71,8 +71,4 @@
       </plugin>
     </plugins>
   </build>
-
-  <scm>
-    <tag>0.1.0</tag>
-  </scm>
 </project>
