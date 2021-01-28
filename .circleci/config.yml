@@ -204,7 +204,7 @@ jobs:
             REVISION=`echo $FINAL_RELEASE_VERSION | cut -d. -f3`
             NEXT_REVISION=`expr $REVISION + 1`
             NEXT_DEVELOPMENT_VERSION="$MAJOR_VERSION.$MINOR_VERSION.$NEXT_REVISION"-SNAPSHOT
-            mvn -s .circleci/.circleci.settings.xml -B -Dtag=$FINAL_RELEASE_VERSION release:prepare -DreleaseVersion=$FINAL_RELEASE_VERSION -DdevelopmentVersion="$MAJOR_VERSION.$MINOR_VERSION.$NEXT_REVISION"-SNAPSHOT
+            mvn -s .circleci/.circleci.settings.xml -B -Dtag=$FINAL_RELEASE_VERSION release:prepare -DreleaseVersion=$FINAL_RELEASE_VERSION -DdevelopmentVersion="$MAJOR_VERSION.$MINOR_VERSION.$NEXT_REVISION"-SNAPSHOT -DscmCommentPrefix="[skip ci] [maven-release-plugin]"
       - run:
           name: Update github release for id << pipeline.parameters.RELEASE_ID >>
           command: |
@@ -222,7 +222,7 @@ jobs:
       - run:
           name: Perform release
           command: |
-            mvn -s .circleci/.circleci.settings.xml release:perform -Prelease-to-staging-repository
+            mvn -s .circleci/.circleci.settings.xml release:perform -Prelease-to-staging-repository -DscmCommentPrefix="[skip ci] [maven-release-plugin]"
       - run:
           name: Copy artifacts
           command: |
