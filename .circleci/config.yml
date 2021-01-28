@@ -201,7 +201,7 @@ jobs:
             FINAL_RELEASE_VERSION=$(echo <<pipeline.parameters.RELEASE_VERSION>> | cut -d'-' -f 1)
             MAJOR_VERSION=`echo $FINAL_RELEASE_VERSION | cut -d. -f1`
             MINOR_VERSION=`echo $FINAL_RELEASE_VERSION | cut -d. -f2`
-            NEXT_MINOR_VERSION =`expr $MINOR_VERSION + 1`
+            NEXT_MINOR_VERSION=`expr $MINOR_VERSION + 1`
             NEXT_DEVELOPMENT_VERSION="$MAJOR_VERSION.$NEXT_MINOR_VERSION.0"-SNAPSHOT
             mvn -s .circleci/.circleci.settings.xml -B -Dtag=<<pipeline.parameters.RELEASE_VERSION>> release:prepare -DreleaseVersion=<<pipeline.parameters.RELEASE_VERSION>> -DdevelopmentVersion=$NEXT_DEVELOPMENT_VERSION -DscmCommentPrefix="[skip ci] [maven-release-plugin]"
       - run:
