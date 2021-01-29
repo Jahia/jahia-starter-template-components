@@ -88,8 +88,7 @@
                   j:view="jahia-starter-template"
                   jcr:mixinTypes="jmix:theme"
                   jcr:primaryType="jnt:template">
-               <pagecontent jcr:mixinTypes="jmix:systemNameReadonly"
-                            jcr:primaryType="jnt:contentList">
+               <pagecontent jcr:primaryType="jnt:contentList">
                   <header j:limitedAbsoluteAreaEdit="false" jcr:primaryType="jnt:absoluteArea"/>
                   <pagecontent j:allowedTypes="jnt:htmlCodeAsFile jnt:htmlCodeAsText"
                                jcr:primaryType="jnt:area"/>
