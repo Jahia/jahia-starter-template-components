@@ -1,5 +1,9 @@
 # Jahia Starter Template
 
+## Compatibility
+
+:warning: Version 0.1.0 is only compatible with Jahia 8.0.1.0 (which includes Content Editor 3.0.1) and later
+
 ## Usage
 
 1. Create Jahia site and select `Start with your HTML` as template set
