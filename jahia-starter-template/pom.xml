@@ -74,7 +74,7 @@
                 <configuration>
                     <instructions>
                         <Jahia-Module-Type>templatesSet</Jahia-Module-Type>
-                        <Jahia-Depends>default,page-builder-components</Jahia-Depends>
+                        <Jahia-Depends>default,page-builder-components,codeMirror-editor</Jahia-Depends>
                     </instructions>
                 </configuration>
             </plugin>
