@@ -33,7 +33,7 @@
   <properties>
     <jahia-module-signature>MCwCFHu3RdEx2QR+ia6Pr5mV1QhsyzXTAhQ0NiCeZ2JVQWUq4Am5NQX7ydZJEg==</jahia-module-signature>
     <jahia-module-type>module</jahia-module-type>
-    <jahia-depends>default,codeMirror-editor</jahia-depends>
+    <jahia-depends>default,codemirror-editor</jahia-depends>
   </properties>
   <dependencies>
     <dependency>
