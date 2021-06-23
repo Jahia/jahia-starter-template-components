@@ -1,0 +1,15 @@
+{
+  "name": "jnt:htmlCodeAsText",
+  "fields": [
+    {
+      "name": "sourceCode",
+      "selectorType": "CodeMirror",
+      "selectorOptions":[
+        {
+          "name": "mode",
+          "value" : "xml"
+        }
+      ]
+    }
+  ]
+}
