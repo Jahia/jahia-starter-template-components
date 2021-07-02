@@ -28,7 +28,7 @@
 
     <artifactId>jahia-starter-template</artifactId>
     <name>Start with your HTML</name>
-    <version>0.2.0-SNAPSHOT</version>
+    <version>0.2.0</version>
     <packaging>bundle</packaging>
     <description>This is the custom profile module (jahia-starter-template) for running on a Jahia server.</description>
 
@@ -88,4 +88,8 @@
             </plugin>
         </plugins>
     </build>
+
+  <scm>
+    <tag>0.2.0</tag>
+  </scm>
 </project>
