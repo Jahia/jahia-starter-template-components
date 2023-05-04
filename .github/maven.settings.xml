@@ -7,7 +7,7 @@
                 <repository>
                     <id>jahia-internal</id>
                     <name>Jahia Internal Repository</name>
-                    <url>${env.NEXUS_INTERNAL_URL}</url>
+                    <url>https://devtools.jahia.com/nexus/content/groups/internal</url>
                     <releases>
                         <enabled>true</enabled>
                         <updatePolicy>never</updatePolicy>
@@ -15,7 +15,8 @@
                     <snapshots>
                         <enabled>true</enabled>
                         <updatePolicy>always</updatePolicy>
-                    </snapshots>
+                    </
+                    snapshots>
                 </repository>
             </repositories>
         </profile>
@@ -50,11 +51,6 @@
             <id>jahia-internal</id>
             <username>${env.NEXUS_USERNAME}</username>
             <password>${env.NEXUS_PASSWORD}</password>
-        </server>
-        <server>
-            <id>staging-repository</id>
-            <username>${env.NEXUS_RELEASE_USERNAME}</username>
-            <password>${env.NEXUS_RELEASE_PASSWORD}</password>
         </server>
     </servers>
 </settings>
